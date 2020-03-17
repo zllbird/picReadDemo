@@ -36,8 +36,9 @@ class GirlDetailPhotoAdapter (
         return binding
     }
 
-    override fun bind(binding: GirlDetailItemBinding, item: String) {
+    override fun bind(binding: GirlDetailItemBinding, item: String,position:Int) {
         binding.imgUrl = item
+        binding.index = "$position"
     }
 
 }

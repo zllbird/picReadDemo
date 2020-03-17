@@ -1,13 +1,23 @@
 package com.bird.mm.repository
 
 import android.util.Xml
+import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.switchMap
+import androidx.paging.Config
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.bird.mm.AppExecutors
 import com.bird.mm.db.UserDao
 import com.bird.mm.net.*
+import com.bird.mm.repository.bg.BGDataSourceFactory
+import com.bird.mm.repository.bg.BGPageSizedDataSourceFactory
+import com.bird.mm.repository.bg.HomeDetailSourceFactory
 import com.bird.mm.util.AbsentLiveData
+import com.bird.mm.util.XML2List
 import com.bird.mm.vo.Girl
+import com.bird.mm.vo.Listing
 import com.bird.mm.vo.Resource
 import com.bird.mm.vo.User
 import org.jsoup.Jsoup
@@ -25,6 +35,46 @@ class UserRepository @Inject constructor(
     private val apiTDService: ApiTDService,
     private val apiMTWService: ApiMTWService
 ) {
+
+    @MainThread
+    fun cardOfBGBD(bgId:String, pageSize:Int): Listing<Girl>{
+        val sourceFactoru = BGDataSourceFactory(apiService,bgId)
+        val pagedList = sourceFactoru.toLiveData(
+            config = Config(
+                pageSize = pageSize,
+                enablePlaceholders = false,
+                prefetchDistance = 4,
+                initialLoadSizeHint = pageSize
+            ),
+            fetchExecutor = appExecutors.networkIO()
+        )
+        return Listing(
+            pagedList = pagedList,
+            networkState = sourceFactoru.sourceLiveData.switchMap {
+                it.initialLoad
+            }
+        )
+    }
+
+    @MainThread
+    fun cardOfBGBDPageSize(bgId:String, pageSize:Int): Listing<Girl>{
+        val sourceFactoru = BGPageSizedDataSourceFactory(apiService)
+        val pagedList = sourceFactoru.toLiveData(
+            config = Config(
+                pageSize = 10,
+                prefetchDistance = 6,
+                enablePlaceholders = false,
+                initialLoadSizeHint = 30
+            ),
+            fetchExecutor = appExecutors.networkIO()
+        )
+        return Listing(
+            pagedList = pagedList,
+            networkState = sourceFactoru.sourceLiveData.switchMap {
+                it.initialLoad
+            }
+        )
+    }
 
     fun loadUser(userId: String): LiveData<Resource<User>> {
         return object : NetworkBoundResource<User, User>(appExecutors) {
@@ -52,7 +102,7 @@ class UserRepository @Inject constructor(
         apiService.girlList(current).observeForever {
             when (it) {
                 is ApiSuccessResponse -> {
-                    val cache = xml2Model(it.body)
+                    val cache = XML2List.xml2Model(it.body)
                     val list = arrayListOf<Girl>()
                     curlist?.let {ccc ->
                         list.addAll(ccc)
@@ -71,7 +121,7 @@ class UserRepository @Inject constructor(
         apiMTWService.girlMTWList(current).observeForever {
             when (it) {
                 is ApiSuccessResponse -> {
-                    val cache = xml2MTWModel(it.body)
+                    val cache = XML2List.xml2MTWModel(it.body)
                     val list = arrayListOf<Girl>()
                     curlist?.let {ccc ->
                         list.addAll(ccc)
@@ -90,7 +140,7 @@ class UserRepository @Inject constructor(
         apiTDService.girl7160List(current).observeForever {
             when (it) {
                 is ApiSuccessResponse -> {
-                    val cache = xml2TDModel(it.body)
+                    val cache = XML2List.xml2TDModel(it.body)
                     val list = arrayListOf<Girl>()
                     curlist?.let {ccc ->
                         list.addAll(ccc)
@@ -106,6 +156,7 @@ class UserRepository @Inject constructor(
 
     var cache :MMNetResource? = null
 
+    @Deprecated("use loadHomeDetail(link:String?,page:Int)")
     fun loadHomeDetail(link:String?): LiveData<List<String>> {
         cache = object :MMNetResource(appExecutors){
 
@@ -116,13 +167,33 @@ class UserRepository @Inject constructor(
         return cache!!.asLiveData()
     }
 
+    @MainThread
+    fun loadHomeDetail(link:String?,pageSize: Int):Listing<String>{
+        val sourceFactory = HomeDetailSourceFactory(apiService,link!!)
+        val pageList = sourceFactory.toLiveData(
+            config = Config(
+                pageSize = pageSize,
+                enablePlaceholders = false,
+                initialLoadSizeHint = pageSize
+            ),
+            fetchExecutor = appExecutors.networkIO()
+        )
+        return Listing(
+            pagedList = pageList,
+            networkState = sourceFactory.sourceLiveData.switchMap {
+                it.initialLoad
+            }
+        )
+    }
+
+
     fun loadHomeTDDetail(link:String?,page:Int): LiveData<String> {
         val da = MutableLiveData<String>()
         val pageString = if (page > 1) "_$page" else ""
         apiTDService.girl7160Detail(link!!,pageString).observeForever{
             when (it) {
                 is ApiSuccessResponse -> {
-                    da.value = xml2TDDetailModel(it.body)
+                    da.value = XML2List.xml2TDDetailModel(it.body)
                 }
                 else -> da.value = ""
             }
@@ -130,71 +201,8 @@ class UserRepository @Inject constructor(
         return da
     }
 
-    private fun xml2TDDetailModel(body: String): String {
-        val doc = Jsoup.parse(body)
-        var img = doc.select("div p a img").first()
-        var src= img?.attr("src")  ?: ""
-//        val list = arrayListOf<String>()
-//        list.add
-        return src
-    }
-
     fun loadMoreDetail(){
         cache?.addValue()
-    }
-
-    private fun xml2Model(xmlString:String): List<Girl> {
-//        val result = String(xmlString.toByteArray(), charset("gb2312"))
-        val doc = Jsoup.parse(xmlString)
-        var box = doc.select("div.MeinvTuPianBox").first()
-        val imgs = box.select("li a")
-        return imgs.map {
-            val link = it.attr("href")
-//            val title = String(it.attr("title").toByteArray(), charset("gb2312"))
-            val title = it.attr("title")
-            val img = it.select("i img").first()
-            var src= img?.attr("src")  ?: ""
-            Timber.i("img $src")
-            Girl(title,src,link)
-        }.filter {
-            !it.cover.isNullOrEmpty()
-        }
-    }
-
-    private fun xml2MTWModel(xmlString:String): List<Girl> {
-//        val result = String(xmlString.toByteArray(), charset("gb2312"))
-        val doc = Jsoup.parse(xmlString)
-//        var box = doc.select("div.MeinvTuPianBox").first()
-        val imgs = doc.select("li div a")
-        return imgs.map {
-            val link = it.attr("href")
-//            val title = String(it.attr("title").toByteArray(), charset("gb2312"))
-            val title = it.attr("title")
-            val img = it.select("img").first()
-            var src= img?.attr("src")  ?: ""
-            Timber.i("img $src")
-            Girl(title,src,link)
-        }.filter {
-            !it.cover.isNullOrEmpty()
-        }
-    }
-
-    private fun xml2TDModel(xmlString:String): List<Girl> {
-//        val result = String(xmlString.toByteArray(), charset("gb2312"))
-        val doc = Jsoup.parse(xmlString)
-//        var box = doc.select("div.MeinvTuPianBox").first()
-        val imgs = doc.select("li a")
-        return imgs.map {
-            val link = it.attr("href")
-//            val title = String(it.attr("title").toByteArray(), charset("gb2312"))
-            val title = it.attr("title")
-            val img = it.select("img").first()
-            var src= img?.attr("src")  ?: ""
-            Timber.i("img $src")
-            Girl(title,src,link)
-        }.filter {
-            !it.cover.isNullOrEmpty()
-        }
     }
 
 }

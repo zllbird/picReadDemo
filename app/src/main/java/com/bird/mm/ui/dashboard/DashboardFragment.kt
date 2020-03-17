@@ -29,7 +29,7 @@ class DashboardFragment : HomeFragment() {
     override fun observeData(){
         homeViewModel.setCurrentPage(20)
         homeViewModel.users.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+//            adapter.submitList(it)
         })
     }
 

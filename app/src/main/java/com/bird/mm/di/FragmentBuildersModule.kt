@@ -1,5 +1,6 @@
 package com.bird.mm.di
 
+import com.bird.mm.ui.background.BGFragment
 import com.bird.mm.ui.dashboard.DashboardFragment
 import com.bird.mm.ui.home.HomeDetailFragment
 import com.bird.mm.ui.home.HomeFragment
@@ -22,5 +23,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeNotificationsFragment(): NotificationsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeBGFragment():BGFragment
 
 }

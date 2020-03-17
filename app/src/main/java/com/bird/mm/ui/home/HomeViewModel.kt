@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
+import androidx.paging.PagedList
 import com.bird.mm.repository.UserRepository
 import com.bird.mm.util.AbsentLiveData
 import com.bird.mm.vo.Girl
@@ -17,6 +18,14 @@ class HomeViewModel @Inject constructor(userRepository: UserRepository): ViewMod
     private val _currentMTEPage = MutableLiveData<Int>()
     private val _currentTDPage = MutableLiveData<Int>()
 
+    private val _bgPage = MutableLiveData<Int>()
+
+    fun setBgPage(current:Int){
+        if (_bgPage.value != current){
+            _bgPage.value = current
+        }
+    }
+
     val currentPage: LiveData<Int>
         get() = _currentPage
 
@@ -25,6 +34,10 @@ class HomeViewModel @Inject constructor(userRepository: UserRepository): ViewMod
 
     val currentTDPage: LiveData<Int>
         get() = _currentTDPage
+
+    val bgList: LiveData<PagedList<Girl>> = _bgPage.switchMap {
+        userRepository.cardOfBGBD("",30).pagedList
+    }
 
     val users: LiveData<List<Girl>> = _currentPage.switchMap { current ->
         if (current == 0){

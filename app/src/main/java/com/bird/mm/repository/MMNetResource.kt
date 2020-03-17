@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.bird.mm.AppExecutors
 import com.bird.mm.net.ApiResponse
 import com.bird.mm.net.ApiSuccessResponse
+import com.bird.mm.util.XML2List
 import com.bird.mm.vo.Resource
 import org.jsoup.Jsoup
 
@@ -20,26 +21,12 @@ abstract class MMNetResource @MainThread constructor(private val appExecutors: A
         apiResponse.observeForever {
             when (it) {
                 is ApiSuccessResponse -> {
-                    val cache = xml2DetailModel(it.body)
+                    val cache = XML2List.xml2DetailModel(it.body)
                     data.value = cache
                 }
                 else -> data.value = arrayListOf()
             }
         }
-    }
-
-    private fun xml2DetailModel(xmlString:String): List<String> {
-        val doc = Jsoup.parse(xmlString)
-        var img = doc.select("div#picBody a img").first()
-        var src= img?.attr("src")  ?: ""
-        val list = arrayListOf<String>()
-//        val indexpre = src.indexOfLast { it.equals("/") }
-//        val index = src.indexOfLast { it.equals(".") }
-        repeat(10){
-            val cache = src.replace("1.jpg", "${it+1}.jpg")
-            list.add(cache)
-        }
-        return list
     }
 
     @MainThread

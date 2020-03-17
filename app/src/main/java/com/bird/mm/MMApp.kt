@@ -3,6 +3,7 @@ package com.bird.mm
 import android.app.Activity
 import android.app.Application
 import com.bird.mm.di.AppInjector
+import com.bird.mm.util.MMDebugTree
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -17,7 +18,7 @@ class MMApp : Application() , HasActivityInjector {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG){
-            Timber.plant(Timber.DebugTree())
+            Timber.plant(MMDebugTree())
         }
         AppInjector.init(this)
     }

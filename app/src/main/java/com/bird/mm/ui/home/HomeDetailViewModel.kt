@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
+import androidx.paging.PagedList
 import com.bird.mm.repository.MMNetResource
 import com.bird.mm.repository.UserRepository
 import com.bird.mm.util.AbsentLiveData
+import com.bird.mm.util.addItemAndNotify
 import javax.inject.Inject
 
 class HomeDetailViewModel @Inject constructor(var userRepository: UserRepository): ViewModel(){
@@ -20,7 +22,7 @@ class HomeDetailViewModel @Inject constructor(var userRepository: UserRepository
     private val _currentTDIndex = MutableLiveData<Int>()
     val currentTDIndex : LiveData<Int> = _currentTDIndex
 
-    val _cacheTD = MutableLiveData<List<String>>()
+    val _cacheTD = MutableLiveData<MutableList<String>>()
 
     var type:String? = null
 
@@ -36,20 +38,22 @@ class HomeDetailViewModel @Inject constructor(var userRepository: UserRepository
 
     fun addPicInCacheTd(string:String){
         if (_cacheTD.value == null){
-            _cacheTD.value = arrayListOf()
+            _cacheTD.value = mutableListOf()
         }
-        val cache = arrayListOf<String>()
-        cache.addAll(_cacheTD.value!!)
-        cache.add(string)
-//        (_cacheTD.value!! as ArrayList).add(string)
-        _cacheTD.value = cache
+//        val cache = arrayListOf<String>()
+//        cache.addAll(_cacheTD.value!!)
+//        cache.add(string)
+////        (_cacheTD.value!! as ArrayList).add(string)
+//        _cacheTD.value = cache
+        _cacheTD.addItemAndNotify(string)
     }
 
-    val photos: LiveData<List<String>> = _link.switchMap {
+    val photos: LiveData<PagedList<String>> = _link.switchMap {
         if (_link.value == null){
             AbsentLiveData.create()
         }else{
-            userRepository.loadHomeDetail(it)
+//            userRepository.loadHomeDetail(it)
+            userRepository.loadHomeDetail(it,10).pagedList
         }
     }
 
@@ -69,9 +73,9 @@ class HomeDetailViewModel @Inject constructor(var userRepository: UserRepository
         }
     }
 
-    val photosTd : LiveData<List<String>> = _currentTDPhoto.switchMap {
+    val photosTd : LiveData<MutableList<String>> = _currentTDPhoto.switchMap {
         if (it == null){
-            AbsentLiveData.create<List<String>>()
+            AbsentLiveData.create<MutableList<String>>()
         }else{
             addPicInCacheTd(it)
             _cacheTD

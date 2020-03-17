@@ -18,7 +18,7 @@ class NotificationsFragment : HomeFragment() {
     override fun observeData() {
         homeViewModel.setCurrentTDPage(1)
         homeViewModel.usersTD.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+//            adapter.submitList(it)
         })
     }
 

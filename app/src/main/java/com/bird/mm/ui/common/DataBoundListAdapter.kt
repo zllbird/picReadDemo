@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import com.bird.mm.AppExecutors
 
 /**
@@ -32,7 +33,7 @@ import com.bird.mm.AppExecutors
 abstract class DataBoundListAdapter<T, V : ViewDataBinding>(
     appExecutors: AppExecutors,
     diffCallback: DiffUtil.ItemCallback<T>
-) : ListAdapter<T, DataBoundViewHolder<V>>(
+) : PagedListAdapter<T, DataBoundViewHolder<V>>(
     AsyncDifferConfig.Builder<T>(diffCallback)
         .setBackgroundThreadExecutor(appExecutors.diskIO())
         .build()
@@ -45,9 +46,9 @@ abstract class DataBoundListAdapter<T, V : ViewDataBinding>(
     protected abstract fun createBinding(parent: ViewGroup): V
 
     override fun onBindViewHolder(holder: DataBoundViewHolder<V>, position: Int) {
-        bind(holder.binding, getItem(position))
+        bind(holder.binding, getItem(position)!!,position)
         holder.binding.executePendingBindings()
     }
 
-    protected abstract fun bind(binding: V, item: T)
+    protected abstract fun bind(binding: V, item: T, position: Int )
 }

@@ -44,8 +44,9 @@ class GirlAdapter(
         return binding
     }
 
-    override fun bind(binding: GirlListItemBinding, item: Girl) {
+    override fun bind(binding: GirlListItemBinding, item: Girl,position:Int) {
         binding.girl = item
+        binding.index = "$position"
     }
 
 }

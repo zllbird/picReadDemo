@@ -13,6 +13,10 @@
             type="Girl" />
 
         <variable
+            name="index"
+            type="String" />
+
+        <variable
             name="imageRequestListener"
             type="com.bumptech.glide.request.RequestListener&lt;Drawable>" />
 
@@ -52,6 +56,16 @@
                 android:paddingRight="8dp"
                 android:paddingBottom="15dp"
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{index}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:visibility="gone"
+                >
+            </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

@@ -1,6 +1,9 @@
 package com.bird.mm
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View
+import android.view.Window
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -20,6 +23,7 @@ class MainActivity : AppCompatActivity() ,HasSupportFragmentInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main)
     }
 
@@ -30,9 +34,18 @@ class MainActivity : AppCompatActivity() ,HasSupportFragmentInjector {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
-        setupActionBarWithNavController(navController, appBarConfiguration)
+            R.id.navigation_home, R.id.navigation_bg, R.id.navigation_notifications))
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when(destination.id){
+                R.id.navigation_home,
+                R.id.navigation_bg,
+                R.id.navigation_notifications -> navView.visibility = View.VISIBLE
+                else -> navView.visibility = View.GONE
+            }
+        }
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {

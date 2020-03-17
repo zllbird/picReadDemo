@@ -23,6 +23,7 @@ import com.bird.mm.binding.FragmentDataBindingComponent
 import com.bird.mm.databinding.FragmentHomeSecondBinding
 import com.bird.mm.di.Injectable
 import com.bird.mm.util.autoCleared
+import timber.log.Timber
 import javax.inject.Inject
 
 class HomeDetailFragment : Fragment() , Injectable{
@@ -68,14 +69,18 @@ class HomeDetailFragment : Fragment() , Injectable{
         viewModel.setLink(args.link)
         viewModel.setType2(args.type)
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.photos.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-        })
+        if (viewModel.type == "Home"){
+            viewModel.photos.observe(viewLifecycleOwner, Observer {
+                adapter.submitList(it)
+            })
+        }
 
         if (viewModel.type == "Noti"){
             viewModel.loadTDDetailByPosition(1)
             viewModel.photosTd.observe(viewLifecycleOwner, Observer {
-                adapter.submitList(it)
+                Timber.i("it size is ${it.size}")
+//                adapter.submitList(it)
+                adapter.notifyDataSetChanged()
             })
         }
 
@@ -92,10 +97,12 @@ class HomeDetailFragment : Fragment() , Injectable{
             object : ViewPager2.OnPageChangeCallback(){
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    when (viewModel.type){
-                        "Home" -> viewModel.loadNextPage(position)
-                        "Noti" -> viewModel.loadTDDetailByPosition(position+2)
-                    }
+//                    binding.viewPager.postDelayed({
+//                        when (viewModel.type){
+//                            "Home" -> viewModel.loadNextPage(position)
+//                            "Noti" -> viewModel.loadTDDetailByPosition(position+2)
+//                        }
+//                    },300)
                 }
             }
         )
