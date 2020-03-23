@@ -17,7 +17,7 @@ class XML2List {
                 val link = it.attr("href")
 //            val title = String(it.attr("title").toByteArray(), charset("gb2312"))
                 val title = it.attr("title")
-                val img = it.select("i img").first()
+                val img = it.select("i img").first() ?: it.select("img").first()
                 var src = img?.attr("src") ?: ""
                 Timber.i("img $src")
                 Girl(title, src, link)

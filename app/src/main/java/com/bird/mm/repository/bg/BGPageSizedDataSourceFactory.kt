@@ -7,13 +7,14 @@ import com.bird.mm.net.ApiService
 import com.bird.mm.vo.Girl
 
 class BGPageSizedDataSourceFactory (
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val name:String = "girl"
 ) : DataSource.Factory<Int,Girl>(){
 
     val sourceLiveData = MutableLiveData<PageSizeDataSource>()
 
     override fun create(): DataSource<Int, Girl> {
-        val source = PageSizeDataSource(apiService)
+        val source = PageSizeDataSource(apiService,name)
         sourceLiveData.postValue(source)
         return source
     }

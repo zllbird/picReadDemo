@@ -3,18 +3,18 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/panties"
-        android:title=""
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="高清壁纸"
         />
 
     <item
         android:id="@+id/navigation_bg"
-        android:icon="@drawable/bra"
-        android:title="" />
+        android:icon="@drawable/ic_photo_size_select_actual_black_24dp"
+        android:title="美女壁纸" />
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/socks"
-        android:title="" />
+        android:icon="@drawable/ic_local_cafe_black_24dp"
+        android:title="美食壁纸" />
 
 </menu>

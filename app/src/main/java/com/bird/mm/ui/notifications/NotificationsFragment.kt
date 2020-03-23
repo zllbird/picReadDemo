@@ -16,9 +16,9 @@ import com.bird.mm.vo.Girl
 class NotificationsFragment : HomeFragment() {
 
     override fun observeData() {
-        homeViewModel.setCurrentTDPage(1)
-        homeViewModel.usersTD.observe(viewLifecycleOwner, Observer {
-//            adapter.submitList(it)
+        homeViewModel.setCurrentFoodPage(1)
+        homeViewModel.foods.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
         })
     }
 

@@ -35,6 +35,8 @@ class HomeViewModel @Inject constructor(userRepository: UserRepository): ViewMod
     val currentTDPage: LiveData<Int>
         get() = _currentTDPage
 
+    private val _currentFood = MutableLiveData<Int>()
+
     val bgList: LiveData<PagedList<Girl>> = _bgPage.switchMap {
         userRepository.cardOfBGBD("",30).pagedList
     }
@@ -63,6 +65,10 @@ class HomeViewModel @Inject constructor(userRepository: UserRepository): ViewMod
         }
     }
 
+    val foods: LiveData<PagedList<Girl>> = _currentFood.switchMap {
+        userRepository.cardOfFood("",30).pagedList
+    }
+
     private val _cacheGirls : List<Girl>?
         get() = users.value
 
@@ -87,6 +93,12 @@ class HomeViewModel @Inject constructor(userRepository: UserRepository): ViewMod
     fun setCurrentTDPage(current:Int){
         if (_currentTDPage.value != current){
             _currentTDPage.value = current
+        }
+    }
+
+    fun setCurrentFoodPage(current:Int){
+        if (_currentFood.value != current){
+            _currentFood.value = current
         }
     }
 

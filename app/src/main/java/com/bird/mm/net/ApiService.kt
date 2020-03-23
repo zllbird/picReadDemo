@@ -18,6 +18,9 @@ interface ApiService{
     @GET("ent/meinvtupian/list_11_{page}.html")
     fun girlListBG(@Path("page") page: Int): Call<String>
 
+    @GET("meishitupian/list_25_{page}.html")
+    fun foodListBG(@Path("page") page: Int): Call<String>
+
     @GET("{url}")
     fun girlDetail(@Path("url") url: String): LiveData<ApiResponse<String>>
 

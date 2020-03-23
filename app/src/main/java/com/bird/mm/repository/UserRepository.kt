@@ -57,8 +57,28 @@ class UserRepository @Inject constructor(
     }
 
     @MainThread
+    fun cardOfFood(bgId:String, pageSize:Int): Listing<Girl>{
+        val sourceFactoru = BGPageSizedDataSourceFactory(apiService,"")
+        val pagedList = sourceFactoru.toLiveData(
+            config = Config(
+                pageSize = pageSize,
+                enablePlaceholders = false,
+                prefetchDistance = 4,
+                initialLoadSizeHint = pageSize
+            ),
+            fetchExecutor = appExecutors.networkIO()
+        )
+        return Listing(
+            pagedList = pagedList,
+            networkState = sourceFactoru.sourceLiveData.switchMap {
+                it.initialLoad
+            }
+        )
+    }
+
+    @MainThread
     fun cardOfBGBDPageSize(bgId:String, pageSize:Int): Listing<Girl>{
-        val sourceFactoru = BGPageSizedDataSourceFactory(apiService)
+        val sourceFactoru = BGPageSizedDataSourceFactory(apiService,"girl")
         val pagedList = sourceFactoru.toLiveData(
             config = Config(
                 pageSize = 10,
