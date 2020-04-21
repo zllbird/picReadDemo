@@ -2,8 +2,7 @@ package com.bird.mm
 
 import android.app.Application
 import androidx.room.Room
-import com.bird.mm.db.MMDb
-import com.bird.mm.db.UserDao
+import com.bird.mm.db.*
 import com.bird.mm.di.ViewModelModule
 import com.bird.mm.net.*
 import com.chuckerteam.chucker.api.ChuckerInterceptor
@@ -72,6 +71,24 @@ class AppModule {
             .create(ApiTDService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun providerNetMusicApi(app: Application):NetMusicApi{
+        return Retrofit.Builder()
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor(ChuckerInterceptor(app))
+                    .build()
+            )
+//            .addConverterFactory(ScalarsConverterFactory.create())
+            .baseUrl("https://www.7160.com")
+            .addConverterFactory(MMCoverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(LiveDataCallAdapterFactory())
+            .build()
+            .create(NetMusicApi::class.java)
+    }
+
 
     @Singleton
     @Provides
@@ -87,6 +104,30 @@ class AppModule {
     @Provides
     fun providerUserDao(db:MMDb):UserDao{
         return db.userDao()
+    }
+
+    @Singleton
+    @Provides
+    fun providerSchemeDao(db:MMDb):SchemeDao{
+        return db.schemeDao()
+    }
+
+    @Singleton
+    @Provides
+    fun providerMusicDao(db:MMDb) : MusicDao{
+        return db.musicDao()
+    }
+
+    @Singleton
+    @Provides
+    fun providerMusicListDao(db:MMDb) : MusicPlayListDao{
+        return db.musicListDao()
+    }
+
+    @Singleton
+    @Provides
+    fun providerMusicInListDao(db:MMDb) : MusicInPlayListDao{
+        return db.musicInListDao()
     }
 
 }

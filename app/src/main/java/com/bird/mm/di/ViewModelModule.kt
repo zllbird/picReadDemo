@@ -6,6 +6,7 @@ import com.bird.mm.MMViewModelFactory
 import com.bird.mm.ui.background.BGViewModel
 import com.bird.mm.ui.home.HomeDetailViewModel
 import com.bird.mm.ui.home.HomeViewModel
+import com.bird.mm.ui.scheme.SchemeViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -29,6 +30,11 @@ abstract class ViewModelModule{
     @IntoMap
     @ViewModelKey(HomeDetailViewModel::class)
     abstract fun bindHomeDetailViewModel(homeDetailViewModel: HomeDetailViewModel) :ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SchemeViewModel::class)
+    abstract fun bindSchemeViewModel(schemeViewModel: SchemeViewModel):ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: MMViewModelFactory): ViewModelProvider.Factory

@@ -40,12 +40,13 @@ open class HomeFragment : Fragment(), Injectable {
     @Inject
     lateinit var appExecutors: AppExecutors
 
+    private var dataBindingComponent = FragmentDataBindingComponent(this)
+
     val homeViewModel: HomeViewModel by viewModels {
         viewModelFactory
     }
 
     var binding by autoCleared<FragmentHomeBinding>()
-    private var dataBindingComponent = FragmentDataBindingComponent(this)
 
     var adapter by autoCleared<GirlAdapter>()
 
@@ -92,8 +93,7 @@ open class HomeFragment : Fragment(), Injectable {
 //                }
 //            }
 //        })
-
-        loadAdData()
+//        loadAdData()
     }
 
     private fun loadAdData() {

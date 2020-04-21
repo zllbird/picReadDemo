@@ -5,6 +5,7 @@ import com.bird.mm.ui.dashboard.DashboardFragment
 import com.bird.mm.ui.home.HomeDetailFragment
 import com.bird.mm.ui.home.HomeFragment
 import com.bird.mm.ui.notifications.NotificationsFragment
+import com.bird.mm.ui.scheme.SchemeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -26,5 +27,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeBGFragment():BGFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSchemeFragment():SchemeFragment
 
 }

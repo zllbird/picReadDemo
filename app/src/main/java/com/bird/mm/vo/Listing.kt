@@ -8,7 +8,7 @@ data class Listing<T>(
 
     val pagedList: LiveData<PagedList<T>>,
 
-    val networkState: LiveData<NetworkState>
+    val networkState: LiveData<NetworkState>? = null
 
     )
 

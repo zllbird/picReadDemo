@@ -8,7 +8,7 @@ class MMDebugTree : Timber.DebugTree(){
         var newTag = tag
         if (tag != null) {
             val threadName = Thread.currentThread().name
-            newTag = "<$threadName> $tag"
+            newTag = "MMLog:<$threadName> $tag"
         }
         super.log(priority, newTag, message, t)
     }

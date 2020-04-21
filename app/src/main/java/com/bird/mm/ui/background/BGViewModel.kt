@@ -32,7 +32,7 @@ class BGViewModel @Inject constructor(
     }
 
     val bgPhotos = _repoResult.switchMap { it.pagedList }
-    val networkState = _repoResult.switchMap { it.networkState }
+    val networkState = _repoResult.switchMap { it.networkState!! }
 
     fun showSubreddit(subreddit: String): Boolean {
         _name.value = subreddit
