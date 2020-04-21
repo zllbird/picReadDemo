@@ -13,7 +13,8 @@
 
         <action
             android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/navigation_home_second" />
+            app:destination="@id/navigation_home_second"
+            />
     </fragment>
     <fragment
         android:id="@+id/navigation_home_second"
@@ -26,7 +27,13 @@
 
         <argument
             android:name="link"
+            android:defaultValue=" "
             app:argType="string" />
+
+        <argument android:name="item"
+            app:nullable="true"
+            android:defaultValue="@null"
+            app:argType="com.bird.mm.vo.Girl"/>
 
         <argument
             android:name="type"

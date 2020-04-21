@@ -1,6 +1,7 @@
 package com.bird.mm.ui.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
@@ -14,7 +15,7 @@ import com.bird.mm.vo.Girl
 class GirlAdapter(
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
-    private val girlClickCallBack: ((Girl)->Unit)?
+    private val girlClickCallBack: ((Girl, View)->Unit)?
 ):DataBoundListAdapter<Girl,GirlListItemBinding>(
     appExecutors = appExecutors,
     diffCallback = object : DiffUtil.ItemCallback<Girl>(){
@@ -37,8 +38,8 @@ class GirlAdapter(
             dataBindingComponent
         )
         binding.root.setOnClickListener {
-            binding.girl?.let {
-                girlClickCallBack?.invoke(it)
+            binding.girl?.let {girl ->
+                girlClickCallBack?.invoke(girl,it)
             }
         }
         return binding

@@ -62,9 +62,9 @@ class BGFragment : Fragment(), Injectable {
         adapter = GirlAdapter(
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
-        ){
+        ){ girl,itemView ->
             findNavController().navigate(
-                BGFragmentDirections.actionNavigationBgToNavigationHomeSecond(it.link,"Home")
+                BGFragmentDirections.actionNavigationBgToNavigationHomeSecond("Home")
             )
         }
         binding.repoList.adapter = adapter

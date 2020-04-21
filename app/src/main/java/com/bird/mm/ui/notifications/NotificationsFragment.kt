@@ -22,11 +22,11 @@ class NotificationsFragment : HomeFragment() {
         })
     }
 
-    override fun startToDetail(it: Girl) {
+    fun startToDetail(it: Girl) {
 //        super.startToDetail(it)
-        findNavController().navigate(
-            NotificationsFragmentDirections.actionNavigationNotificationsToNavigationHomeSecond(it.link,"Noti")
-        )
+//        findNavController().navigate(
+//            NotificationsFragmentDirections.actionNavigationNotificationsToNavigationHomeSecond(it.link,"Noti")
+//        )
     }
 
     override fun loadNextPage() {

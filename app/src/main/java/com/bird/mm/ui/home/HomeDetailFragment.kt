@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 
@@ -15,6 +17,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.ChangeBounds
+import androidx.transition.ChangeImageTransform
 import androidx.viewpager2.widget.ViewPager2
 import com.bird.mm.AppExecutors
 
@@ -23,6 +27,7 @@ import com.bird.mm.binding.FragmentDataBindingComponent
 import com.bird.mm.databinding.FragmentHomeSecondBinding
 import com.bird.mm.di.Injectable
 import com.bird.mm.util.autoCleared
+import com.bumptech.glide.Glide
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -65,24 +70,35 @@ class HomeDetailFragment : Fragment() , Injectable{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewPager()
-        viewModel.setLink(args.link)
-        viewModel.setType2(args.type)
-        binding.lifecycleOwner = viewLifecycleOwner
-        if (viewModel.type == "Home"){
-            viewModel.photos.observe(viewLifecycleOwner, Observer {
-                adapter.submitList(it)
-            })
-        }
+        val image = view.findViewById<ImageView>(R.id.iv_girl_icon)
+        val text = view.findViewById<TextView>(R.id.tv_girl_text)
+        ViewCompat.setTransitionName(image,"head_image")
+        ViewCompat.setTransitionName(text,"head_text")
 
-        if (viewModel.type == "Noti"){
-            viewModel.loadTDDetailByPosition(1)
-            viewModel.photosTd.observe(viewLifecycleOwner, Observer {
-                Timber.i("it size is ${it.size}")
+        val item = args.item
+        Glide.with(this).load(item?.cover).into(image)
+        text.setText(item?.title)
+
+//        initViewPager()
+//        viewModel.setLink(args.link)
+//        viewModel.setType2(args.type)
+//        binding.lifecycleOwner = viewLifecycleOwner
+//        if (viewModel.type == "Home"){
+//            viewModel.photos.observe(viewLifecycleOwner, Observer {
 //                adapter.submitList(it)
-                adapter.notifyDataSetChanged()
-            })
-        }
+//            })
+//        }
+//
+//        if (viewModel.type == "Noti"){
+////            viewModel.loadTDDetailByPosition(1)
+//            viewModel.photosTd.observe(viewLifecycleOwner, Observer {
+//                Timber.i("it size is ${it.size}")
+////                adapter.submitList(it)
+//                adapter.notifyDataSetChanged()
+//            })
+//        }
+
+        sharedElementEnterTransition = ChangeBounds()
 
     }
 

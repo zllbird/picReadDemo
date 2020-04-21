@@ -41,7 +41,8 @@ class SchemeViewModel @Inject constructor(private val schemeRepository: SchemeRe
     }
 
     fun updateScheme(item: SchemeItem){
-        item.schemeUrl = "我是修改后的"
     }
+
+
 
 }

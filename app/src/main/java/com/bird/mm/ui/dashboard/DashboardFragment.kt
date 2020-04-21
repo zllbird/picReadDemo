@@ -20,10 +20,10 @@ class DashboardFragment : HomeFragment() {
         homeViewModel.loadNextPage()
     }
 
-    override fun startToDetail(it: Girl) {
-        findNavController().navigate(
-            DashboardFragmentDirections.actionNavigationDashboardToNavigationHomeSecond(it.link,"Home")
-        )
+    fun startToDetail(it: Girl) {
+//        findNavController().navigate(
+//            DashboardFragmentDirections.actionNavigationDashboardToNavigationHomeSecond(it.link,"Home")
+//        )
     }
 
     override fun observeData(){

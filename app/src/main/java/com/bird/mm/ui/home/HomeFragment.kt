@@ -8,12 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.core.content.getSystemService
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -77,8 +81,8 @@ open class HomeFragment : Fragment(), Injectable {
         val girlAdapter = GirlAdapter(
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
-        ){
-            startToDetail(it)
+        ){ girl,itemView ->
+            startToDetail(girl,itemView)
         }
         binding.repoList.adapter = girlAdapter
         adapter = girlAdapter
@@ -160,9 +164,18 @@ open class HomeFragment : Fragment(), Injectable {
         homeViewModel.loadNextPage()
     }
 
-    open fun startToDetail(it:Girl) {
-        findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToHomeSecondFragment(it.link,"Home")
+    open fun startToDetail(it:Girl,view:View) {
+        ViewCompat.setTransitionName(view.findViewById(R.id.iv_girl_icon), "head_image")
+        ViewCompat.setTransitionName(view.findViewById(R.id.tv_girl_text), "head_text")
+        val extras = FragmentNavigatorExtras(
+            view.findViewById<ImageView>(R.id.iv_girl_icon) to "head_image" ,
+            view.findViewById<ImageView>(R.id.tv_girl_text) to "head_text"
+        )
+        val item =
+            HomeFragmentDirections.actionHomeFragmentToHomeSecondFragment("Home").setItem(it)
+        view.findNavController().navigate(
+            item,
+            extras
         )
     }
 

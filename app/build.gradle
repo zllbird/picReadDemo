@@ -47,6 +47,10 @@ android {
 
 }
 
+androidExtensions {
+    experimental = true
+}
+
 repositories {
     flatDir {
         dirs 'libs'

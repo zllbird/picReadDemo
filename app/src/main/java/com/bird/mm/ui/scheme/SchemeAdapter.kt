@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.AsyncListUtil
 import androidx.recyclerview.widget.DiffUtil
 import com.bird.mm.AppExecutors
 import com.bird.mm.R
@@ -43,6 +44,11 @@ class SchemeAdapter(
         binding.root.setOnClickListener {
             click(binding.schmeItem)
         }
+
+        binding.root.setOnLongClickListener {
+            return@setOnLongClickListener true
+        }
+
         return binding
     }
 

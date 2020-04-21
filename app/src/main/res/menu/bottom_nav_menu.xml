@@ -8,7 +8,7 @@
         />
 
     <item
-        android:id="@+id/navigation_bg"
+        android:id="@+id/navigation_home"
         android:icon="@drawable/ic_photo_size_select_actual_black_24dp"
         android:title="2" />
 
