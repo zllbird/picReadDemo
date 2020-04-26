@@ -1,5 +1,6 @@
 package com.bird.mm.ui.home
 
+import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Size
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
@@ -16,12 +18,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.ActivityNavigatorExtras
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bird.mm.AppExecutors
+import com.bird.mm.HomeDetailActivity
 import com.bird.mm.R
 import com.bird.mm.binding.FragmentDataBindingComponent
 import com.bird.mm.databinding.FragmentHomeBinding
@@ -86,6 +90,21 @@ open class HomeFragment : Fragment(), Injectable {
         }
         binding.repoList.adapter = girlAdapter
         adapter = girlAdapter
+
+//        binding.ivGirlIcon.setOnClickListener {
+//            ViewCompat.setTransitionName(view.findViewById(R.id.iv_girl_icon), "head_image")
+//            val item2 = HomeFragmentDirections.actionNavigationHomeToNavigationHomeDetail()
+////            val extras = FragmentNavigatorExtras(
+////                view.findViewById<ImageView>(R.id.iv_girl_icon) to "head_image"
+////            )
+//            ActivityOptionsCompat.makeThumbnailScaleUpAnimation(isMenuVisible)
+//            ActivityNavigatorExtras(,)
+//            view.findNavController().navigate(
+//                item2,
+//                extras
+//            )
+////            startActivity(Intent(activity,HomeDetailActivity::class.java))
+//        }
 
 //        binding.repoList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
 //            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -173,17 +192,19 @@ open class HomeFragment : Fragment(), Injectable {
         )
         val item =
             HomeFragmentDirections.actionHomeFragmentToHomeSecondFragment("Home").setItem(it)
+//        val item = HomeFragmentDirections.actionHomeFragmentToHomeSecondFragment()
+        val item2 = HomeFragmentDirections.actionNavigationHomeToNavigationHomeDetail()
         view.findNavController().navigate(
-            item,
+            item2,
             extras
         )
     }
 
     open fun observeData(){
-        homeViewModel.setBgPage(1)
-        homeViewModel.bgList.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-        })
+//        homeViewModel.setBgPage(1)
+//        homeViewModel.bgList.observe(viewLifecycleOwner, Observer {
+//            adapter.submitList(it)
+//        })
     }
 
 }

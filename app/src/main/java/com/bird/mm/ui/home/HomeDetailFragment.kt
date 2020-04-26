@@ -51,6 +51,11 @@ class HomeDetailFragment : Fragment() , Injectable{
 
     private var adapter by autoCleared<GirlDetailPhotoAdapter>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = ChangeBounds()
+    }
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -72,12 +77,14 @@ class HomeDetailFragment : Fragment() , Injectable{
         super.onViewCreated(view, savedInstanceState)
         val image = view.findViewById<ImageView>(R.id.iv_girl_icon)
         val text = view.findViewById<TextView>(R.id.tv_girl_text)
-        ViewCompat.setTransitionName(image,"head_image")
-        ViewCompat.setTransitionName(text,"head_text")
 
-        val item = args.item
-        Glide.with(this).load(item?.cover).into(image)
-        text.setText(item?.title)
+        ViewCompat.setTransitionName(image,"head_image")
+//        ViewCompat.setTransitionName(text,"head_text")
+
+//        val item = args.item
+//        Glide.with(this).load(item?.cover).into(image)
+//        text.setText(item?.title)
+
 
 //        initViewPager()
 //        viewModel.setLink(args.link)
@@ -97,8 +104,11 @@ class HomeDetailFragment : Fragment() , Injectable{
 //                adapter.notifyDataSetChanged()
 //            })
 //        }
+        activity?.startPostponedEnterTransition()
+    }
 
-        sharedElementEnterTransition = ChangeBounds()
+    override fun onResume() {
+        super.onResume()
 
     }
 

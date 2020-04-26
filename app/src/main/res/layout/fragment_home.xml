@@ -60,5 +60,14 @@
             android:layout_marginStart="8dp"
             />
 
+        <ImageView
+            android:id="@+id/iv_girl_icon"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bra"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
