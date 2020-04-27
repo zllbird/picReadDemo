@@ -26,11 +26,10 @@ class DetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val image = view.findViewById<ImageView>(R.id.iv_girl_icon)
-        val text = view.findViewById<TextView>(R.id.tv_girl_text)
 
-        ViewCompat.setTransitionName(image,"head_image")
+        ViewCompat.setTransitionName(image, "robot")
 
-        activity?.supportStartPostponedEnterTransition()
+        activity?.startPostponedEnterTransition()
     }
 
 }

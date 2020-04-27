@@ -1,5 +1,6 @@
 package com.bird.mm.ui.home
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
@@ -91,7 +92,7 @@ open class HomeFragment : Fragment(), Injectable {
         binding.repoList.adapter = girlAdapter
         adapter = girlAdapter
 
-//        binding.ivGirlIcon.setOnClickListener {
+        binding.ivGirlIcon.setOnClickListener {
 //            ViewCompat.setTransitionName(view.findViewById(R.id.iv_girl_icon), "head_image")
 //            val item2 = HomeFragmentDirections.actionNavigationHomeToNavigationHomeDetail()
 ////            val extras = FragmentNavigatorExtras(
@@ -103,8 +104,15 @@ open class HomeFragment : Fragment(), Injectable {
 //                item2,
 //                extras
 //            )
-////            startActivity(Intent(activity,HomeDetailActivity::class.java))
-//        }
+
+            val intent = Intent(activity, HomeDetailActivity::class.java)
+            // create the transition animation - the images in the layouts
+            // of both activities are defined with android:transitionName="robot"
+            val options = ActivityOptions.makeSceneTransitionAnimation(activity, binding.ivGirlIcon, "robot")
+            // start the new activity
+            startActivity(intent, options.toBundle())
+//            startActivity(Intent(activity,HomeDetailActivity::class.java))
+        }
 
 //        binding.repoList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
 //            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
