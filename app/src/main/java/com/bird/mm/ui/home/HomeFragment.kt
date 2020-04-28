@@ -34,10 +34,16 @@ import com.bird.mm.di.Constants
 import com.bird.mm.di.Injectable
 import com.bird.mm.util.autoCleared
 import com.bird.mm.vo.Girl
+import com.google.android.material.snackbar.Snackbar
+import com.jakewharton.rxbinding3.view.clicks
 import com.qq.e.ads.banner2.UnifiedBannerADListener
 import com.qq.e.ads.banner2.UnifiedBannerView
 import com.qq.e.comm.util.AdError
+import io.reactivex.Flowable
+import io.reactivex.ObservableSource
 import timber.log.Timber
+import java.util.concurrent.Callable
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -92,7 +98,7 @@ open class HomeFragment : Fragment(), Injectable {
         binding.repoList.adapter = girlAdapter
         adapter = girlAdapter
 
-        binding.ivGirlIcon.setOnClickListener {
+//        binding.ivGirlIcon.setOnClickListener {
 //            ViewCompat.setTransitionName(view.findViewById(R.id.iv_girl_icon), "head_image")
 //            val item2 = HomeFragmentDirections.actionNavigationHomeToNavigationHomeDetail()
 ////            val extras = FragmentNavigatorExtras(
@@ -105,14 +111,27 @@ open class HomeFragment : Fragment(), Injectable {
 //                extras
 //            )
 
-            val intent = Intent(activity, HomeDetailActivity::class.java)
-            // create the transition animation - the images in the layouts
-            // of both activities are defined with android:transitionName="robot"
-            val options = ActivityOptions.makeSceneTransitionAnimation(activity, binding.ivGirlIcon, "robot")
-            // start the new activity
-            startActivity(intent, options.toBundle())
+//            ViewCompat.setTransitionName(view.findViewById(R.id.iv_girl_icon), "robot")
+//            val extras = ActivityNavigatorExtras(
+//                ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,binding.ivGirlIcon,"robot")
+//            )
+//
+//            val item3 = HomeFragmentDirections.actionNavigationHomeToNavigationHomeDetail()
+//            view.findNavController().navigate(
+//                item3,
+//                extras
+//            )
+
+//            val intent = Intent(activity, HomeDetailActivity::class.java)
+//            // create the transition animation - the images in the layouts
+//            // of both activities are defined with android:transitionName="robot"
+//            val options = ActivityOptions.makeSceneTransitionAnimation(activity, binding.ivGirlIcon, "robot")
+//            // start the new activity
+//            startActivity(intent, options.toBundle())
 //            startActivity(Intent(activity,HomeDetailActivity::class.java))
-        }
+//        }
+
+//        binding.ivGirlIcon.clicks().subscribe { Snackbar.make(view, "单机暂停", Snackbar.LENGTH_SHORT).show() }
 
 //        binding.repoList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
 //            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
