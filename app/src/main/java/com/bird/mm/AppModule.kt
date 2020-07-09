@@ -27,7 +27,8 @@ class AppModule {
                     .build()
             )
 //            .addConverterFactory(ScalarsConverterFactory.create())
-            .baseUrl("https://www.2717.com/")
+//                http://1205.jeffreyvandiggele.nl/v.php?category=top&viewtype=basic&page=2
+            .baseUrl("http://1205.jeffreyvandiggele.nl/")
             .addConverterFactory(MMCoverterFactory.create())
 //            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())

@@ -40,7 +40,10 @@ import com.qq.e.ads.banner2.UnifiedBannerADListener
 import com.qq.e.ads.banner2.UnifiedBannerView
 import com.qq.e.comm.util.AdError
 import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.ObservableSource
+import io.reactivex.functions.Function
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
@@ -93,7 +96,8 @@ open class HomeFragment : Fragment(), Injectable {
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
         ){ girl,itemView ->
-            startToDetail(girl,itemView)
+//            startToDetail2(girl,itemView)
+            girl.title.set("点击之后")
         }
         binding.repoList.adapter = girlAdapter
         adapter = girlAdapter
@@ -131,6 +135,12 @@ open class HomeFragment : Fragment(), Injectable {
 //            startActivity(Intent(activity,HomeDetailActivity::class.java))
 //        }
 
+//        val obs = binding.ivGirlIcon.clicks().share().map { 1 }
+//
+//        obs.buffer(Observable.merge(obs.debounce(2000,TimeUnit.MILLISECONDS),obs.take(5)))
+//            .subscribe {
+//                Timber.i("obs buffer time ${it.size}")
+//            }
 //        binding.ivGirlIcon.clicks().subscribe { Snackbar.make(view, "单机暂停", Snackbar.LENGTH_SHORT).show() }
 
 //        binding.repoList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
@@ -210,6 +220,12 @@ open class HomeFragment : Fragment(), Injectable {
         homeViewModel.loadNextPage()
     }
 
+
+    private fun startToDetail2(girl: Girl, itemView: View) {
+        val item = HomeFragmentDirections.actionNavigationHomeToNavigationPlay().setLink(girl.link)
+        findNavController().navigate(item)
+    }
+
     open fun startToDetail(it:Girl,view:View) {
         ViewCompat.setTransitionName(view.findViewById(R.id.iv_girl_icon), "head_image")
         ViewCompat.setTransitionName(view.findViewById(R.id.tv_girl_text), "head_text")
@@ -228,10 +244,10 @@ open class HomeFragment : Fragment(), Injectable {
     }
 
     open fun observeData(){
-//        homeViewModel.setBgPage(1)
-//        homeViewModel.bgList.observe(viewLifecycleOwner, Observer {
-//            adapter.submitList(it)
-//        })
+        homeViewModel.setBgPage(1)
+        homeViewModel.bgList.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+        })
     }
 
 }

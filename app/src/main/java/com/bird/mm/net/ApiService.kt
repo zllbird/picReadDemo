@@ -5,6 +5,7 @@ import com.bird.mm.vo.User
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface ApiService{
@@ -30,4 +31,12 @@ interface ApiService{
     @GET("beautiful/beijingtupian/list_24_{page}.html")
     fun bgList(@Path("page") page:Int): Call<String>
 
+    @GET("http://1205.jeffreyvandiggele.nl/v.php?category=top&viewtype=basic")
+    fun uKnowList(@Query("page") page:Int): Call<String>
+
+//    @GET("{url}")
+//    fun unKnowPlayUrl(@Path("url") url: String): Call<String>
+
+    @GET
+    fun unKnowPlayUrl(@Url url: String): Call<String>
 }

@@ -10,6 +10,7 @@ internal class MMCoverter private constructor() {
         @Throws(IOException::class)
         override fun convert(value: ResponseBody): String {
 //            return value.string()
+//            return value.source().readString(charset("gb2312"))
             return value.source().readString(charset("gb2312"))
         }
 

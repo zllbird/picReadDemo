@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(userRepository: UserRepository): ViewMod
     private val _currentFood = MutableLiveData<Int>()
 
     val bgList: LiveData<PagedList<Girl>> = _bgPage.switchMap {
-        userRepository.cardOfBGBD("",30).pagedList
+        userRepository.cardOfBGBD("",10).pagedList
     }
 
     val users: LiveData<List<Girl>> = _currentPage.switchMap { current ->

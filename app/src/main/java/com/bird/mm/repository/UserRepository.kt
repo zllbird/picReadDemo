@@ -22,6 +22,9 @@ import com.bird.mm.vo.Resource
 import com.bird.mm.vo.User
 import org.jsoup.Jsoup
 import org.xmlpull.v1.XmlPullParser
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import timber.log.Timber
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -133,6 +136,35 @@ class UserRepository @Inject constructor(
                 else -> da.value = arrayListOf()
             }
         }
+        return da
+    }
+
+    fun loadPlay(webUrl:String): LiveData<String> {
+        val da = MutableLiveData<String>()
+        apiService.unKnowPlayUrl(webUrl).enqueue(object : Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Timber.e(t)
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (response.isSuccessful){
+                    val body = response.body()
+                    body.let {
+                        val url = XML2List.xml2UKnowPlayUrl(it!!)
+                        da.value = url
+                    }
+                }
+            }
+        })
+//        apiService.unKnowPlayUrl(webUrl).observeForever {
+//            when (it) {
+//                is ApiSuccessResponse -> {
+//                    val url = XML2List.xml2UKnowPlayUrl(it.body)
+//                    da.value = url
+//                }
+//                else -> da.value = ""
+//            }
+//        }
         return da
     }
 

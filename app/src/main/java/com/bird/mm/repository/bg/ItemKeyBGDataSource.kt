@@ -34,10 +34,12 @@ class ItemKeyBGDataSource (
         Timber.i("loadAfter params.key ${params.key}  params.pagesize ${params.requestedLoadSize}  mPage $mPage")
 
         networkState.postValue(NetworkState.LOADING)
-        val request = apiService.bgList(mPage)
+//        val request = apiService.bgList(mPage)
+        val request = apiService.uKnowList(mPage)
         val string = request.execute().body()
         string?.let {
-            val list = XML2List.xml2BGModel(it)
+//            val list = XML2List.xml2BGModel(it)
+            val list = XML2List.xml2UKnowModel(it)
             callback.onResult(list)
         }
         networkState.postValue(NetworkState.LOADED)
@@ -47,20 +49,22 @@ class ItemKeyBGDataSource (
         // do nothing
     }
 
-    override fun getKey(item: Girl) = item.title
+    override fun getKey(item: Girl) = item.cover
 
     override fun loadInitial(
         params: LoadInitialParams<String>,
         callback: LoadInitialCallback<Girl>
     ) {
-        val request = apiService.bgList(mPage)
+//        val request = apiService.bgList(mPage)
+        val request = apiService.uKnowList(mPage)
 
         networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)
 
         val resposne = request.execute()
         val xmlString = resposne.body()
-        val list = XML2List.xml2BGModel(xmlString!!)
+//        val list = XML2List.xml2BGModel(xmlString!!)
+        val list = XML2List.xml2UKnowModel(xmlString!!)
         networkState.postValue(NetworkState.LOADED)
         initialLoad.postValue(NetworkState.LOADED)
         callback.onResult(list)

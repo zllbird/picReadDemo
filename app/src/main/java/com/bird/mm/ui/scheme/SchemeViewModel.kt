@@ -18,6 +18,10 @@ class SchemeViewModel @Inject constructor(private val schemeRepository: SchemeRe
 
     private val _page = MutableLiveData<Int>()
 
+    private val _selectUrl = MutableLiveData<String>()
+
+    val selectUrl = _selectUrl
+
     val schemes : LiveData<PagedList<SchemeItem>> = _page.switchMap {
         schemeRepository.query().pagedList
     }
@@ -41,6 +45,11 @@ class SchemeViewModel @Inject constructor(private val schemeRepository: SchemeRe
     }
 
     fun updateScheme(item: SchemeItem){
+
+    }
+
+    fun checkSelectUrl(url:String){
+        _selectUrl.value = url
     }
 
 

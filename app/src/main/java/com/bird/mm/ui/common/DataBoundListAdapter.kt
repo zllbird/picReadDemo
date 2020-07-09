@@ -38,9 +38,26 @@ abstract class DataBoundListAdapter<T, V : ViewDataBinding>(
         .setBackgroundThreadExecutor(appExecutors.diskIO())
         .build()
 ) {
+
+    private val holders : MutableList<DataBoundViewHolder<V>> = mutableListOf()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBoundViewHolder<V> {
         val binding = createBinding(parent)
-        return DataBoundViewHolder(binding)
+        val holder = DataBoundViewHolder(binding)
+        binding.lifecycleOwner = holder
+        holder.markCreated()
+        holders.add(holder)
+        return holder
+    }
+
+    override fun onViewAttachedToWindow(holder: DataBoundViewHolder<V>) {
+        super.onViewAttachedToWindow(holder)
+        holder.markAttach()
+    }
+
+    override fun onViewDetachedFromWindow(holder: DataBoundViewHolder<V>) {
+        super.onViewDetachedFromWindow(holder)
+        holder.markDetach()
     }
 
     protected abstract fun createBinding(parent: ViewGroup): V
@@ -51,4 +68,8 @@ abstract class DataBoundListAdapter<T, V : ViewDataBinding>(
     }
 
     protected abstract fun bind(binding: V, item: T, position: Int )
+
+    fun destory(){
+        holders.forEach { it.markDestroyed() }
+    }
 }

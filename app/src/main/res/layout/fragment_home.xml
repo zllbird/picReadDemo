@@ -23,6 +23,13 @@
         <import type="com.bird.mm.vo.User"/>
         <import type="androidx.lifecycle.LiveData"/>
         <import type="com.bird.mm.vo.Resource"/>
+
+        <import type="com.bird.mm.ui.home.HomeViewModel"/>
+
+        <variable
+            name="home"
+            type="HomeViewModel" />
+
         <variable
             name="user"
             type="LiveData&lt;Resource&lt;User&gt;&gt;"
@@ -44,6 +51,14 @@
             >
         </FrameLayout>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->home.loadNextPage()}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -58,15 +73,6 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            />
-
-        <ImageView
-            android:id="@+id/iv_girl_icon"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bra"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

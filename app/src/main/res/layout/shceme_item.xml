@@ -4,17 +4,44 @@
 
     <data>
 
+        <import type="com.bird.mm.ui.scheme.SchemeViewModel"/>
         <import type="com.bird.mm.vo.SchemeItem"/>
 
         <variable
             name="schmeItem"
             type="SchemeItem" />
 
+        <variable
+            name="vm"
+            type="SchemeViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+<!--        <androidx.appcompat.widget.AppCompatRadioButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            android:text="@{schmeItem.schemeUrl}"-->
+<!--            android:checked="@{ vm.selectUrl == schmeItem.schemeUrl}"-->
+<!--            android:clickable="false"-->
+<!--            />-->
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="@{schmeItem.schemeUrl}"
+            android:checked="@{ vm.selectUrl == schmeItem.schemeUrl}"
+            android:clickable="false"
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -24,6 +51,7 @@
             android:textSize="20sp"
             android:maxLines="3"
             android:text="@{schmeItem.schemeUrl}"
+            android:visibility="invisible"
             android:gravity="center_vertical" />
 
         <Button

@@ -64,10 +64,12 @@ class SchemeFragment : Fragment(), Injectable {
         bind.lifecycleOwner = viewLifecycleOwner
         adapter = SchemeAdapter(
             dataBindingComponent,
-            appExecutors
+            appExecutors,
+            schemeViewModel
         ) {
-            startScheme(it?.schemeUrl)
-            updateModel(it)
+//            startScheme(it?.schemeUrl)
+//            updateModel(it)
+            schemeViewModel.checkSelectUrl(it?.schemeUrl!!)
         }
 
         bind.repoList.adapter = adapter

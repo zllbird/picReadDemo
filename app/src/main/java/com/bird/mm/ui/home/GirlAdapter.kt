@@ -10,6 +10,7 @@ import com.bird.mm.AppExecutors
 import com.bird.mm.R
 import com.bird.mm.databinding.GirlListItemBinding
 import com.bird.mm.ui.common.DataBoundListAdapter
+import com.bird.mm.ui.common.DataBoundViewHolder
 import com.bird.mm.vo.Girl
 
 class GirlAdapter(
@@ -43,6 +44,21 @@ class GirlAdapter(
             }
         }
         return binding
+    }
+
+    override fun onViewAttachedToWindow(holder: DataBoundViewHolder<GirlListItemBinding>) {
+        super.onViewAttachedToWindow(holder)
+        holder.markAttach()
+    }
+
+    override fun onViewDetachedFromWindow(holder: DataBoundViewHolder<GirlListItemBinding>) {
+        super.onViewDetachedFromWindow(holder)
+        holder.markDetach()
+    }
+
+    override fun onViewRecycled(holder: DataBoundViewHolder<GirlListItemBinding>) {
+        super.onViewRecycled(holder)
+        holder.markDestroyed()
     }
 
     override fun bind(binding: GirlListItemBinding, item: Girl,position:Int) {
