@@ -16,6 +16,7 @@
 
 package com.bird.mm.ui.common
 
+import android.content.Context
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
@@ -50,6 +51,9 @@ abstract class DataBoundListAdapter<T, V : ViewDataBinding>(
         return holder
     }
 
+    open fun testForObserver(context: Context, holder: DataBoundViewHolder<V>) {
+    }
+
     override fun onViewAttachedToWindow(holder: DataBoundViewHolder<V>) {
         super.onViewAttachedToWindow(holder)
         holder.markAttach()
@@ -64,6 +68,7 @@ abstract class DataBoundListAdapter<T, V : ViewDataBinding>(
 
     override fun onBindViewHolder(holder: DataBoundViewHolder<V>, position: Int) {
         bind(holder.binding, getItem(position)!!,position)
+        testForObserver(holder.itemView.context,holder)
         holder.binding.executePendingBindings()
     }
 

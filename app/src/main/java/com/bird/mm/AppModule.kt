@@ -28,7 +28,8 @@ class AppModule {
             )
 //            .addConverterFactory(ScalarsConverterFactory.create())
 //                http://1205.jeffreyvandiggele.nl/v.php?category=top&viewtype=basic&page=2
-            .baseUrl("http://1205.jeffreyvandiggele.nl/")
+//            .baseUrl("http://1205.jeffreyvandiggele.nl/")
+            .baseUrl("https://www.2717.com/")
             .addConverterFactory(MMCoverterFactory.create())
 //            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())

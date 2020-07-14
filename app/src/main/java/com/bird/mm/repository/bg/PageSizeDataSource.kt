@@ -26,12 +26,13 @@ class PageSizeDataSource(
         networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)
 
-        val resposne = request.execute()
-        val xmlString = resposne.body()
-        val list = XML2List.xml2Model(xmlString!!)
+//        val resposne = request.execute()
+//        val xmlString = resposne.body()
+//        val list = XML2List.xml2Model(xmlString!!)
+        val list = arrayListOf<Girl>()
         networkState.postValue(NetworkState.LOADED)
         initialLoad.postValue(NetworkState.LOADED)
-        val size = list.size - 5
+//        val size = list.size - 5
         callback.onResult(list,-1,2)
     }
 

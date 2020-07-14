@@ -1,5 +1,6 @@
 package com.bird.mm.ui.home
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.bird.mm.R
 import com.bird.mm.databinding.GirlListItemBinding
 import com.bird.mm.ui.common.DataBoundListAdapter
 import com.bird.mm.ui.common.DataBoundViewHolder
+import com.bird.mm.ui.scheme.TestLifeCycleObserver
 import com.bird.mm.vo.Girl
 
 class GirlAdapter(
@@ -44,6 +46,14 @@ class GirlAdapter(
             }
         }
         return binding
+    }
+
+    override fun testForObserver(context: Context,holder: DataBoundViewHolder<GirlListItemBinding>) {
+        super.testForObserver(context,holder)
+        holder.binding.girl.let {
+            val test = TestLifeCycleObserver(context,holder.binding.girl)
+            holder.lifecycle.addObserver(test)
+        }
     }
 
     override fun onViewAttachedToWindow(holder: DataBoundViewHolder<GirlListItemBinding>) {

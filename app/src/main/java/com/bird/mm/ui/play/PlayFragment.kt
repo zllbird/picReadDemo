@@ -33,7 +33,6 @@ import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
-
 class PlayFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

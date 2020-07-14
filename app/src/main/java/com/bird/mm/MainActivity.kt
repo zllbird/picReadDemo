@@ -23,33 +23,43 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+//        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main)
     }
 
     override fun onStart() {
         super.onStart()
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_scheme, R.id.navigation_scheme, R.id.navigation_scheme
-            )
-        )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.navigation_scheme, R.id.navigation_home, R.id.navigation_notifications))
+        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            when (destination.id) {
-                R.id.navigation_home,
-                R.id.navigation_bg,
+//        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+//        val navController = findNavController(R.id.nav_host_fragment)
+//        // Passing each menu ID as a set of Ids because each
+//        // menu should be considered as top level destinations.
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.navigation_scheme, R.id.navigation_scheme, R.id.navigation_scheme
+//            )
+//        )
+////        setupActionBarWithNavController(navController, appBarConfiguration)
+//        navView.setupWithNavController(navController)
+//
+//        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+//            when (destination.id) {
+//                R.id.navigation_home,
+//                R.id.navigation_bg,
 //                R.id.navigation_scheme,
-                R.id.navigation_notifications -> navView.visibility = View.VISIBLE
-                else -> navView.visibility = View.GONE
-            }
-        }
+//                R.id.navigation_notifications -> navView.visibility = View.VISIBLE
+//                else -> navView.visibility = View.GONE
+//            }
+//        }
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {

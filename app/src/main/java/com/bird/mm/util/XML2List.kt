@@ -27,6 +27,24 @@ class XML2List {
             }
         }
 
+        fun xml2BGModel(xmlString: String): List<Girl> {
+//        val result = String(xmlString.toByteArray(), charset("gb2312"))
+            val doc = Jsoup.parse(xmlString)
+            var box = doc.select("div.w1200 ul.w110").first()
+            val imgs = box.select("li a")
+            return imgs.map {
+                val link = it.attr("href")
+//            val title = String(it.attr("title").toByteArray(), charset("gb2312"))
+                val title = it.attr("title")
+                val img = it.select("img").first()
+                var src = img?.attr("src") ?: ""
+                Timber.i("img $src")
+                Girl(title, src, link)
+            }.filter {
+                !it.cover.isNullOrEmpty()
+            }
+        }
+
         fun xml2UKnowModel(xmlString: String): List<Girl> {
 //        val result = String(xmlString.toByteArray(), charset("gb2312"))
             val doc = Jsoup.parse(xmlString)

@@ -38,8 +38,8 @@ class ItemKeyBGDataSource (
         val request = apiService.uKnowList(mPage)
         val string = request.execute().body()
         string?.let {
-//            val list = XML2List.xml2BGModel(it)
-            val list = XML2List.xml2UKnowModel(it)
+            val list = XML2List.xml2BGModel(it)
+//            val list = XML2List.xml2UKnowModel(it)
             callback.onResult(list)
         }
         networkState.postValue(NetworkState.LOADED)
@@ -55,16 +55,16 @@ class ItemKeyBGDataSource (
         params: LoadInitialParams<String>,
         callback: LoadInitialCallback<Girl>
     ) {
-//        val request = apiService.bgList(mPage)
-        val request = apiService.uKnowList(mPage)
+        val request = apiService.bgList(mPage)
+//        val request = apiService.uKnowList(mPage)
 
         networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)
 
         val resposne = request.execute()
         val xmlString = resposne.body()
-//        val list = XML2List.xml2BGModel(xmlString!!)
-        val list = XML2List.xml2UKnowModel(xmlString!!)
+        val list = XML2List.xml2BGModel(xmlString!!)
+//        val list = XML2List.xml2UKnowModel(xmlString!!)
         networkState.postValue(NetworkState.LOADED)
         initialLoad.postValue(NetworkState.LOADED)
         callback.onResult(list)

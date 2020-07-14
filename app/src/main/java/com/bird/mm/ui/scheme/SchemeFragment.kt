@@ -68,8 +68,8 @@ class SchemeFragment : Fragment(), Injectable {
             schemeViewModel
         ) {
 //            startScheme(it?.schemeUrl)
-//            updateModel(it)
-            schemeViewModel.checkSelectUrl(it?.schemeUrl!!)
+            updateModel(it)
+//            schemeViewModel.checkSelectUrl(it?.schemeUrl!!)
         }
 
         bind.repoList.adapter = adapter
@@ -78,7 +78,7 @@ class SchemeFragment : Fragment(), Injectable {
 
     private fun updateModel(item: SchemeItem?) {
         schemeViewModel.updateScheme(item!!)
-        adapter.notifyDataSetChanged()
+//        adapter.notifyDataSetChanged()
     }
 
     fun startScheme(url:String?){
@@ -104,12 +104,29 @@ class SchemeFragment : Fragment(), Injectable {
         schemeViewModel.setPage(0)
         bind.addBtn.setOnClickListener {
             Timber.i("click ")
-            schemeViewModel.addSchemeUrl(bind.input.text.toString())
+//            schemeViewModel.addSchemeUrl(bind.input.text.toString())
+            bind.addBtn.postDelayed({
+//                val aa = schemeViewModel.testSchemeItem.value
+//                if (aa == null){
+////                    schemeViewModel.settestSchemeItem(1)
+//                    schemeViewModel.changetestSchemeItem()
+//                }else{
+////                    schemeViewModel.settestSchemeItem(aa+1)
+//                    schemeViewModel.changetestSchemeItem()
+//                }
+                schemeViewModel.changetestSchemeItems()
+            },3000)
         }
 //        loadB612()
         bind.addBtnB612.setOnClickListener {
             loadB612()
         }
+
+        schemeViewModel.testSchemeItem.observe(viewLifecycleOwner, Observer {
+            Timber.i("testSchemeItem $it")
+        })
+
+//        schemeViewModel.testSchemeItem.value?.addOnPropertyChangedCallback()
     }
 
     private fun loadB612() {
@@ -123,6 +140,12 @@ class SchemeFragment : Fragment(), Injectable {
         items.add(SchemeItem(0,"b612cnb://chaopai?landing=cpactivitylist&mId=chaopai-1234"))
         items.add(SchemeItem(0,"b612cnb://chaopai?"))
         schemeViewModel.addSchemes(items)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.i("onDestroy")
+//        adapter.destory()
     }
 
 }

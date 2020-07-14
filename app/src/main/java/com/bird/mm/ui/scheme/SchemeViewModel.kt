@@ -26,6 +26,24 @@ class SchemeViewModel @Inject constructor(private val schemeRepository: SchemeRe
         schemeRepository.query().pagedList
     }
 
+//    private val _testSchemeItem = MutableLiveData<Int>()
+    private val _testSchemeItem = MutableLiveData<SchemeItem>()
+
+    val testSchemeItem = _testSchemeItem
+
+//    fun settestSchemeItem(value:Int){
+//    fun settestSchemeItem(value:Int){
+//        _testSchemeItem.value = value
+//    }
+    fun changetestSchemeItem(){
+        _testSchemeItem.value?.schemeUrl = "changed changed"
+        _testSchemeItem.value = _testSchemeItem.value
+    }
+
+    fun changetestSchemeItems(){
+        schemes.value?.get(9)?.schemeUrl = "9 hao weizhi "
+    }
+
     fun setPage(page:Int) {
         if (_page.value != page){
             _page.value = page
@@ -45,7 +63,7 @@ class SchemeViewModel @Inject constructor(private val schemeRepository: SchemeRe
     }
 
     fun updateScheme(item: SchemeItem){
-
+        item.schemeUrl = "notify"
     }
 
     fun checkSelectUrl(url:String){

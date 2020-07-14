@@ -25,6 +25,8 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.ORIENTATION_VERTICAL
 import com.bird.mm.AppExecutors
 import com.bird.mm.HomeDetailActivity
 import com.bird.mm.R
@@ -97,10 +99,13 @@ open class HomeFragment : Fragment(), Injectable {
             appExecutors = appExecutors
         ){ girl,itemView ->
 //            startToDetail2(girl,itemView)
-            girl.title.set("点击之后")
+//            girl.title.set("点击之后")
         }
         binding.repoList.adapter = girlAdapter
         adapter = girlAdapter
+
+        binding.vpList.adapter = girlAdapter
+        binding.vpList.orientation = ORIENTATION_VERTICAL
 
 //        binding.ivGirlIcon.setOnClickListener {
 //            ViewCompat.setTransitionName(view.findViewById(R.id.iv_girl_icon), "head_image")

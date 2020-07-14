@@ -56,9 +56,7 @@ class SchemeAdapter(
     override fun bind(binding: ShcemeItemBinding, item: SchemeItem, position: Int) {
         binding.schmeItem = item
         binding.vm = viewModel
-        binding.btnCopy.setOnClickListener {
-            Util.saveToClipboard(item.schemeUrl,binding.root.context)
-        }
+
     }
 
 
