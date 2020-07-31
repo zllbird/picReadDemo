@@ -2,19 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_scheme"
+        android:id="@+id/home"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="1"
         />
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/list"
         android:icon="@drawable/ic_photo_size_select_actual_black_24dp"
         android:title="2" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/mobile_navigation"
         android:icon="@drawable/ic_local_cafe_black_24dp"
         android:title="3" />
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_home"-->
+<!--        android:icon="@drawable/ic_photo_size_select_actual_black_24dp"-->
+<!--        android:title="2" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_notifications"-->
+<!--        android:icon="@drawable/ic_local_cafe_black_24dp"-->
+<!--        android:title="3" />-->
 
 </menu>

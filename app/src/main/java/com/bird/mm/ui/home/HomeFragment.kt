@@ -20,6 +20,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ActivityNavigatorExtras
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -98,7 +99,7 @@ open class HomeFragment : Fragment(), Injectable {
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
         ){ girl,itemView ->
-//            startToDetail2(girl,itemView)
+            startToDetail(girl,itemView)
 //            girl.title.set("点击之后")
         }
         binding.repoList.adapter = girlAdapter

@@ -67,8 +67,8 @@ class SchemeFragment : Fragment(), Injectable {
             appExecutors,
             schemeViewModel
         ) {
-//            startScheme(it?.schemeUrl)
-            updateModel(it)
+            startScheme(it?.schemeUrl)
+//            updateModel(it)
 //            schemeViewModel.checkSelectUrl(it?.schemeUrl!!)
         }
 
@@ -99,13 +99,13 @@ class SchemeFragment : Fragment(), Injectable {
             Timber.i("loadData ${it.size}")
             adapter.submitList(it)
             adapter.notifyDataSetChanged()
-            bind.repoList.scrollToPosition(0)
+//            bind.repoList.scrollToPosition(0)
         })
-        schemeViewModel.setPage(0)
+
         bind.addBtn.setOnClickListener {
             Timber.i("click ")
-//            schemeViewModel.addSchemeUrl(bind.input.text.toString())
-            bind.addBtn.postDelayed({
+            schemeViewModel.addSchemeUrl(bind.input.text.toString())
+//            bind.addBtn.postDelayed({
 //                val aa = schemeViewModel.testSchemeItem.value
 //                if (aa == null){
 ////                    schemeViewModel.settestSchemeItem(1)
@@ -114,12 +114,13 @@ class SchemeFragment : Fragment(), Injectable {
 ////                    schemeViewModel.settestSchemeItem(aa+1)
 //                    schemeViewModel.changetestSchemeItem()
 //                }
-                schemeViewModel.changetestSchemeItems()
-            },3000)
+//                schemeViewModel.changetestSchemeItems()
+//            },3000)
         }
 //        loadB612()
         bind.addBtnB612.setOnClickListener {
-            loadB612()
+//            loadB612()
+            schemeViewModel.setPage(0)
         }
 
         schemeViewModel.testSchemeItem.observe(viewLifecycleOwner, Observer {
@@ -140,6 +141,11 @@ class SchemeFragment : Fragment(), Injectable {
         items.add(SchemeItem(0,"b612cnb://chaopai?landing=cpactivitylist&mId=chaopai-1234"))
         items.add(SchemeItem(0,"b612cnb://chaopai?"))
         schemeViewModel.addSchemes(items)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Timber.i("onDestroyView")
     }
 
     override fun onDestroy() {
