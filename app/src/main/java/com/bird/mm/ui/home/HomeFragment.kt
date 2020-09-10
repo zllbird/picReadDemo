@@ -39,9 +39,6 @@ import com.bird.mm.util.autoCleared
 import com.bird.mm.vo.Girl
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding3.view.clicks
-import com.qq.e.ads.banner2.UnifiedBannerADListener
-import com.qq.e.ads.banner2.UnifiedBannerView
-import com.qq.e.comm.util.AdError
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
@@ -71,7 +68,6 @@ open class HomeFragment : Fragment(), Injectable {
 
     var adapter by autoCleared<GirlAdapter>()
 
-    var bv: UnifiedBannerView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -162,49 +158,6 @@ open class HomeFragment : Fragment(), Injectable {
 //        loadAdData()
     }
 
-    private fun loadAdData() {
-        bv?.let {
-            binding.bannerContainer.removeView(it)
-            it.destroy()
-        }
-        bv = UnifiedBannerView(activity,Constants.AD_APP_ID,Constants.AD_BANNER_POI,
-            object : UnifiedBannerADListener{
-                override fun onADCloseOverlay() {
-                    Timber.i("onADCloseOverlay")
-                }
-
-                override fun onADExposure() {
-                    Timber.i("onADExposure")
-                }
-
-                override fun onADClosed() {
-                    Timber.i("onADClosed")
-                }
-
-                override fun onADLeftApplication() {
-                    Timber.i("onADLeftApplication")
-                }
-
-                override fun onADOpenOverlay() {
-                    Timber.i("onADOpenOverlay")
-                }
-
-                override fun onNoAD(p0: AdError?) {
-                    Timber.i("onNoAD ${p0?.errorMsg}")
-                }
-
-                override fun onADReceive() {
-                    Timber.i("onADReceive")
-                }
-
-                override fun onADClicked() {
-                    Timber.i("onADClicked")
-                }
-            })
-        bv?.setRefresh(30)
-        binding.bannerContainer.addView(bv,getUnifiedBannerLayoutParams())
-        bv?.loadAD()
-    }
 
     /**
      * banner2.0规定banner宽高比应该为6.4:1 , 开发者可自行设置符合规定宽高比的具体宽度和高度值

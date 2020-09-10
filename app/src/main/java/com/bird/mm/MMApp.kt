@@ -2,6 +2,7 @@ package com.bird.mm
 
 import android.app.Activity
 import android.app.Application
+import android.os.MessageQueue
 import com.bird.mm.di.AppInjector
 import com.bird.mm.util.MMDebugTree
 import dagger.android.AndroidInjector

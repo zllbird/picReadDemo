@@ -48,4 +48,6 @@ class SchemeRepository @Inject constructor(
         )
     }
 
+    suspend fun querySus() = schemeDao.querySusend()
+
 }

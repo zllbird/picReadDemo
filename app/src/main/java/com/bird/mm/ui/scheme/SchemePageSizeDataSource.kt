@@ -20,8 +20,8 @@ class SchemePageSizeDataSource(
 
     init {
         db.invalidationTracker.addObserver(object : InvalidationTracker.Observer("SchemeItem"){
-            override fun onInvalidated(tables: MutableSet<String>) {
-                invalidate()
+                    override fun onInvalidated(tables: MutableSet<String>) {
+                        invalidate()
             }
         })
     }
@@ -31,6 +31,7 @@ class SchemePageSizeDataSource(
         callback: LoadInitialCallback<Int, SchemeItem>
     ) {
         Timber.i("loadInitial ")
+//        val list = schemeDao.query()
         val list = schemeDao.query()
         Timber.i("loadInitial list size is ${list.size}")
         callback.onResult(list,-1,1)

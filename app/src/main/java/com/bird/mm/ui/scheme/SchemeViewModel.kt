@@ -1,9 +1,7 @@
 package com.bird.mm.ui.scheme
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
+import android.view.View
+import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.bird.mm.repository.SchemeRepository
 import com.bird.mm.repository.UserRepository
@@ -11,10 +9,31 @@ import com.bird.mm.vo.SchemeItem
 import javax.inject.Inject
 
 import com.bird.mm.util.addItemAndNotify
+import com.bird.mm.vo.Girl
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class SchemeViewModel @Inject constructor(private val schemeRepository: SchemeRepository): ViewModel() {
 
+
+    private val _user = MutableLiveData<Girl>()
+
+    val userData : LiveData<Girl> = _user
+
+    fun getUser(){
+        viewModelScope.launch {
+            val user = withContext(Dispatchers.IO){
+                schemeRepository.querySus()
+            }
+//            _user.value = user
+        }
+    }
+
+    val userLive = liveData(Dispatchers.IO) {
+        emit(Girl("","",""))
+    }
 
     private val _page = MutableLiveData<Int>()
 
@@ -68,6 +87,11 @@ class SchemeViewModel @Inject constructor(private val schemeRepository: SchemeRe
 
     fun checkSelectUrl(url:String){
         _selectUrl.value = url
+    }
+
+
+    fun onClick(v:View){
+        Timber.i("~~~### onClick")
     }
 
 

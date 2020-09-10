@@ -5,7 +5,6 @@ import androidx.room.Room
 import com.bird.mm.db.*
 import com.bird.mm.di.ViewModelModule
 import com.bird.mm.net.*
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -23,7 +22,7 @@ class AppModule {
         return Retrofit.Builder()
             .client(
                 OkHttpClient.Builder()
-                    .addInterceptor(ChuckerInterceptor(app))
+//                    .addInterceptor(ChuckerInterceptor(app))
                     .build()
             )
 //            .addConverterFactory(ScalarsConverterFactory.create())
@@ -43,7 +42,7 @@ class AppModule {
         return Retrofit.Builder()
             .client(
                 OkHttpClient.Builder()
-                    .addInterceptor(ChuckerInterceptor(app))
+//                    .addInterceptor(ChuckerInterceptor(app))
                     .build()
             )
             .addConverterFactory(ScalarsConverterFactory.create())
@@ -61,7 +60,7 @@ class AppModule {
         return Retrofit.Builder()
             .client(
                 OkHttpClient.Builder()
-                    .addInterceptor(ChuckerInterceptor(app))
+//                    .addInterceptor(ChuckerInterceptor(app))
                     .build()
             )
 //            .addConverterFactory(ScalarsConverterFactory.create())
@@ -79,7 +78,7 @@ class AppModule {
         return Retrofit.Builder()
             .client(
                 OkHttpClient.Builder()
-                    .addInterceptor(ChuckerInterceptor(app))
+//                    .addInterceptor(ChuckerInterceptor(app))
                     .build()
             )
 //            .addConverterFactory(ScalarsConverterFactory.create())

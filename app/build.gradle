@@ -6,6 +6,8 @@ apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-allopen'
 
+apply plugin: 'android-aspectjx'
+
 android {
     compileSdkVersion 29
 
@@ -52,6 +54,26 @@ androidExtensions {
     experimental = true
 }
 
+aspectjx {
+    exclude '.jar'
+    exclude 'androidx'
+    exclude 'com.google'
+    //关闭AspectJX功能
+    enabled true
+    //排除所有package路径中包含`android.support`的class文件及库（jar文件）
+    exclude 'android.support'
+    exclude 'com.alibaba'
+    exclude 'org.apache.weex'
+    exclude 'com.aliyun'
+    exclude 'com.taobao'
+    exclude 'alibaba'
+    exclude 'com.github'
+    exclude 'javax.inject'
+    exclude 'io.reactivex'
+    exclude 'com.tencent'
+    exclude 'com.squareup'
+}
+
 repositories {
     flatDir {
         dirs 'libs'
@@ -61,7 +83,7 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation (name:'GDTSDK.unionNormal.4.176.1046', ext:'aar')
+//    implementation (name:'GDTSDK.unionNormal.4.176.1046', ext:'aar')
 
     implementation deps.app_compat
     implementation deps.recyclerview
@@ -71,7 +93,6 @@ dependencies {
     implementation deps.transition
     implementation deps.fragment.testing
     implementation deps.navigation.fragment_ktx
-    implementation deps.room.runtime
     implementation deps.lifecycle.livedata_ktx
     implementation deps.lifecycle.runtime
     implementation deps.lifecycle.java8
@@ -98,11 +119,15 @@ dependencies {
 
     kapt deps.dagger.android_support_compiler
     kapt deps.dagger.compiler
-    kapt deps.room.compiler
     kapt deps.lifecycle.compiler
 
-    debugImplementation "com.github.ChuckerTeam.Chucker:library:3.1.2"
-    releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:3.1.2"
+
+    implementation deps.room.runtime
+    implementation deps.room.ktx
+    kapt deps.room.compiler
+
+//    debugImplementation "com.github.ChuckerTeam.Chucker:library:3.1.2"
+//    releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:3.1.2"
     implementation 'com.squareup.retrofit2:converter-simplexml:2.3.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
 
@@ -112,9 +137,12 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.11.4'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.4'
 
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    api 'org.aspectj:aspectjrt:1.9.5'
 
 }

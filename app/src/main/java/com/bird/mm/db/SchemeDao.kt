@@ -19,4 +19,7 @@ interface SchemeDao {
 
     @Query("SELECT * FROM SchemeItem ORDER BY id DESC")
     fun query():List<SchemeItem>
+
+    @Query("SELECT * FROM SchemeItem ORDER BY id DESC")
+    suspend fun querySusend():List<SchemeItem>
 }
