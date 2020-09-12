@@ -12,12 +12,18 @@ import com.bird.mm.net.ApiTDService
 import com.bird.mm.ui.scheme.SchemePageSizedDataSourceFactory
 import com.bird.mm.vo.Listing
 import com.bird.mm.vo.SchemeItem
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 class SchemeRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val db:MMDb,
-    private val schemeDao: SchemeDao
+    private val schemeDao: SchemeDao,
+    private val apiService: ApiService
 ) {
 
     fun insert(schemeItem: SchemeItem){
@@ -46,6 +52,24 @@ class SchemeRepository @Inject constructor(
         return Listing(
             pagedList = pageList
         )
+    }
+
+    fun download(url:String){
+        apiService.downloadU(url).enqueue(object : Callback<ResponseBody>{
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Timber.i("~~~### onFailure")
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Timber.i("~~~### onResponse")
+                try {
+                    val body = response.body()?.byteStream()
+                }catch (t: Throwable){
+
+                }
+            }
+
+        })
     }
 
     suspend fun querySus() = schemeDao.querySusend()

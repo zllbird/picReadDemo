@@ -1,5 +1,7 @@
 package com.bird.mm.repository
 
+import android.app.Activity
+import android.content.Context
 import android.util.Xml
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
@@ -15,6 +17,8 @@ import com.bird.mm.repository.bg.BGDataSourceFactory
 import com.bird.mm.repository.bg.BGPageSizedDataSourceFactory
 import com.bird.mm.repository.bg.HomeDetailSourceFactory
 import com.bird.mm.util.AbsentLiveData
+import com.bird.mm.util.ParseWebUrlHelper
+import com.bird.mm.util.Util
 import com.bird.mm.util.XML2List
 import com.bird.mm.vo.Girl
 import com.bird.mm.vo.Listing
@@ -139,6 +143,25 @@ class UserRepository @Inject constructor(
         return da
     }
 
+    fun parseUrl(activity: Activity , url:String) : LiveData<String>{
+        //        val url = "http://www.yhdm.tv/v/4992-10.html"
+//        val url = "https://y.qq.com/n/yqq/song/000B4ijs4Ufwql.html"
+        val da = MutableLiveData<String>()
+        ParseWebUrlHelper.init(activity,url)
+        ParseWebUrlHelper.setOnParseListener(object : ParseWebUrlHelper.OnParseWebUrlListener{
+            override fun onFindUrl(url: String?) {
+                if (Util.checkIsVideo(url)){
+
+                }
+            }
+
+            override fun onError(errorMsg: String?) {
+            }
+        })
+        ParseWebUrlHelper.startParse()
+        return da
+    }
+
     fun loadPlay(webUrl:String): LiveData<String> {
         val da = MutableLiveData<String>()
         apiService.unKnowPlayUrl(webUrl).enqueue(object : Callback<String> {
@@ -156,15 +179,6 @@ class UserRepository @Inject constructor(
                 }
             }
         })
-//        apiService.unKnowPlayUrl(webUrl).observeForever {
-//            when (it) {
-//                is ApiSuccessResponse -> {
-//                    val url = XML2List.xml2UKnowPlayUrl(it.body)
-//                    da.value = url
-//                }
-//                else -> da.value = ""
-//            }
-//        }
         return da
     }
 

@@ -85,6 +85,9 @@
         android:name="com.bird.mm.ui.scheme.SchemeFragment"
         android:label=""
         tools:layout="@layout/fragment_scheme" >
+        <action
+            android:id="@+id/action_navigation_scheme_to_navigation_play"
+            app:destination="@id/navigation_play" />
     </fragment>
 
     <fragment

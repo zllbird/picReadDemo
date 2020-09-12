@@ -2,14 +2,14 @@ package com.bird.mm.net
 
 import androidx.lifecycle.LiveData
 import com.bird.mm.vo.User
+import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
-import retrofit2.http.Url
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.*
 
 interface ApiService{
-    // todo for test
+
     @GET("users/{login}")
     fun getUser(@Path("login") login: String): LiveData<ApiResponse<User>>
 
@@ -39,4 +39,9 @@ interface ApiService{
 
     @GET
     fun unKnowPlayUrl(@Url url: String): Call<String>
+
+
+    @Streaming
+    @GET
+    fun downloadU(@Url url:String) : Call<ResponseBody>
 }

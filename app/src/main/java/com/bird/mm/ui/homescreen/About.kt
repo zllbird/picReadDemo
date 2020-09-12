@@ -22,6 +22,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bird.mm.R
+import com.bird.mm.util.ParseWebUrlHelper
+import timber.log.Timber
 
 /**
  * Shows "About"
@@ -33,4 +35,9 @@ class About : Fragment() {
 
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
 }

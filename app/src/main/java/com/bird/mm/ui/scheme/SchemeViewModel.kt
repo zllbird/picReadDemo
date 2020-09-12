@@ -22,6 +22,14 @@ class SchemeViewModel @Inject constructor(private val schemeRepository: SchemeRe
 
     val userData : LiveData<Girl> = _user
 
+    var downloadUrl : String? = "http://aqqmusic.tc.qq.com/amobile.music.tc.qq.com/C400000pe8GD0He2Fe.m4a?guid=2436595906&vkey=67EC32465E121EE436D1A30C3E5A5073DFF6465A4B8E2402D3C54D66A5A7261EE37C21AC9DDF6C5C07A59D47305CBD8695C5E7FCC258012A&uin=0&fromtag=38"
+
+    fun startDownload(){
+        downloadUrl?.let {
+            schemeRepository.download(it)
+        }
+    }
+
     fun getUser(){
         viewModelScope.launch {
             val user = withContext(Dispatchers.IO){

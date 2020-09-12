@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bird.mm.AppExecutors
 import com.bird.mm.R
 import com.bird.mm.binding.FragmentDataBindingComponent
@@ -73,6 +74,7 @@ class SchemeFragment : Fragment(), Injectable {
         }
 
         bind.repoList.adapter = adapter
+        bind.vm = schemeViewModel
         loadData()
     }
 
@@ -126,6 +128,11 @@ class SchemeFragment : Fragment(), Injectable {
         schemeViewModel.testSchemeItem.observe(viewLifecycleOwner, Observer {
             Timber.i("testSchemeItem $it")
         })
+
+        bind.addStartPlay.setOnClickListener {
+            val item = SchemeFragmentDirections.actionNavigationSchemeToNavigationPlay().setLink(schemeViewModel.downloadUrl!!)
+            findNavController().navigate(item)
+        }
 
 //        schemeViewModel.testSchemeItem.value?.addOnPropertyChangedCallback()
     }

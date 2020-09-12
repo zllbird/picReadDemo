@@ -18,15 +18,7 @@
             app:show_shuffle_button="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-
-        <WebView
-            android:id="@+id/web"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginBottom="100dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

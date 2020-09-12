@@ -24,6 +24,8 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bird.mm.R
+import com.bird.mm.util.ParseWebUrlHelper
+import timber.log.Timber
 
 /**
  * Shows the main title screen with a button that navigates to [About].
@@ -39,4 +41,26 @@ class Title : Fragment() {
         }
         return view
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        //        val url = "http://www.yhdm.tv/v/4992-10.html"
+//        val url = "https://y.qq.com/n/yqq/song/000B4ijs4Ufwql.html"
+//        ParseWebUrlHelper.init(activity,url)
+//        ParseWebUrlHelper.setOnParseListener(object : ParseWebUrlHelper.OnParseWebUrlListener{
+//            override fun onFindUrl(url: String?) {
+//                Timber.i("url : $url")
+//            }
+//
+//            override fun onError(errorMsg: String?) {
+//                Timber.i("errorMsg : $errorMsg")
+//            }
+//        })
+//        ParseWebUrlHelper.startParse()
+
+
+    }
+
 }

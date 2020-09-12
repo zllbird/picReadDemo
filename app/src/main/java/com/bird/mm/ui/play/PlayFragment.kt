@@ -88,11 +88,14 @@ class PlayFragment : Fragment(), Injectable {
             player.playWhenReady = true
         })
 
-//        playViewModel.setWebUrl(args.link)
-        bind.web.settings.javaScriptEnabled =true
-        bind.web.webViewClient = PlayWebViewClient()
-        bind.web.addJavascriptInterface(PlayJavascriptInterface(),"java_obj")
-        bind.web.loadUrl(args.link)
+//        playViewModel.setPlayUrl(args.link)
+//
+//        // This is the MediaSource representing the media to be played.
+//        val videoSource: MediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+//            .createMediaSource(Uri.parse(args.link))
+//        // Prepare the player with the source.
+//        player.prepare(videoSource)
+//        player.playWhenReady = true
     }
 
     fun playVideo(url: String){
@@ -106,28 +109,6 @@ class PlayFragment : Fragment(), Injectable {
             // Prepare the player with the source.
             player.prepare(videoSource)
             player.playWhenReady = true
-        }
-
-    }
-
-    inner class PlayJavascriptInterface  {
-
-        @JavascriptInterface
-        fun onHtml(html:String) {
-            Timber.i(html)
-            val url = XML2List.xml2UKnowPlayUrl(html)
-            val result = url.replace("amp;","")
-            playVideo(result)
-        }
-
-
-    }
-
-    inner class PlayWebViewClient : WebViewClient() {
-
-        override fun onPageFinished(view: WebView?, url: String?) {
-            super.onPageFinished(view, url)
-            bind.web.loadUrl("javascript:window.java_obj.onHtml('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
         }
 
     }

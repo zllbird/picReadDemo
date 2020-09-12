@@ -14,6 +14,15 @@ class Util {
             clipboard.setPrimaryClip(ClipData.newPlainText("Copied Text", txt))
             Toast.makeText(context, "已复制: $txt", Toast.LENGTH_SHORT).show()
         }
+
+
+        fun checkIsVideo(url:String?) : Boolean{
+            url?.let {
+                return url.contains(".mp4") || url.contains(".flv") || url.contains(".avi")
+            }
+            return false
+        }
+
     }
 
 

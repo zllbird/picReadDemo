@@ -11,14 +11,23 @@ import javax.inject.Inject
 class PlayViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
 
     private val _webUrl = MutableLiveData<String>()
+    private val _playUrl = MutableLiveData<String>()
 
-    val playUrl: LiveData<String> = _webUrl.switchMap {
-        userRepository.loadPlay(it)
-    }
+//    val playUrl: LiveData<String> = _webUrl.switchMap {
+//        userRepository.loadPlay(it)
+//    }
+
+    val playUrl: LiveData<String> = _playUrl
 
     fun setWebUrl(webUrl: String) {
         if (_webUrl.value != webUrl) {
             _webUrl.value = webUrl
+        }
+    }
+
+    fun setPlayUrl(playUrl:String){
+        if (_playUrl.value == playUrl){
+            _playUrl.value = playUrl;
         }
     }
 
