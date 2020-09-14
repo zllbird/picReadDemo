@@ -3,6 +3,7 @@ package com.bird.mm
 import android.app.Activity
 import android.app.Application
 import android.os.MessageQueue
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bird.mm.di.AppInjector
 import com.bird.mm.util.MMDebugTree
 import dagger.android.AndroidInjector
@@ -20,8 +21,12 @@ class MMApp : Application() , HasActivityInjector {
         super.onCreate()
         if (BuildConfig.DEBUG){
             Timber.plant(MMDebugTree())
+            ARouter.openLog()
+            ARouter.openDebug()
         }
         AppInjector.init(this)
+
+        ARouter.init(this)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

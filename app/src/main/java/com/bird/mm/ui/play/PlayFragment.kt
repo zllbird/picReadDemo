@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.bird.mm.AppExecutors
 import com.bird.mm.R
 import com.bird.mm.binding.FragmentDataBindingComponent
@@ -33,6 +34,7 @@ import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
+@Route(path = "/main/play")
 class PlayFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

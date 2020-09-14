@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.ORIENTATION_VERTICAL
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.bird.mm.AppExecutors
 import com.bird.mm.HomeDetailActivity
 import com.bird.mm.R
@@ -50,6 +51,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
+@Route(path = "/main/home")
 open class HomeFragment : Fragment(), Injectable {
 
     @Inject

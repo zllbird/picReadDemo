@@ -12,17 +12,21 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bird.mm.AppExecutors
 import com.bird.mm.R
 import com.bird.mm.binding.FragmentDataBindingComponent
 import com.bird.mm.databinding.FragmentSchemeBinding
 import com.bird.mm.di.Injectable
+import com.bird.mm.ui.play.PlayFragment
 import com.bird.mm.util.autoCleared
 import com.bird.mm.vo.SchemeItem
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import javax.inject.Inject
 
+@Route(path = "/main/scheme")
 class SchemeFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -130,8 +134,12 @@ class SchemeFragment : Fragment(), Injectable {
         })
 
         bind.addStartPlay.setOnClickListener {
-            val item = SchemeFragmentDirections.actionNavigationSchemeToNavigationPlay().setLink(schemeViewModel.downloadUrl!!)
-            findNavController().navigate(item)
+//            val item = SchemeFragmentDirections.actionNavigationSchemeToNavigationPlay().setLink(schemeViewModel.downloadUrl!!)
+//            findNavController().navigate(item)
+
+            val playFragment = ARouter.getInstance().build("/main/play").navigation() as PlayFragment
+            val ads = ""
+
         }
 
 //        schemeViewModel.testSchemeItem.value?.addOnPropertyChangedCallback()

@@ -48,6 +48,7 @@ class Title : Fragment() {
 
         //        val url = "http://www.yhdm.tv/v/4992-10.html"
 //        val url = "https://y.qq.com/n/yqq/song/000B4ijs4Ufwql.html"
+//        val url = "https://m.yangshipin.cn/video?type=1&pid=600001814&ptag=4_1.0.5.15187_copy"
 //        ParseWebUrlHelper.init(activity,url)
 //        ParseWebUrlHelper.setOnParseListener(object : ParseWebUrlHelper.OnParseWebUrlListener{
 //            override fun onFindUrl(url: String?) {
