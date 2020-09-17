@@ -125,7 +125,7 @@ class SchemeFragment : Fragment(), Injectable {
         }
 //        loadB612()
         bind.addBtnB612.setOnClickListener {
-//            loadB612()
+            loadB612()
             schemeViewModel.setPage(0)
         }
 
@@ -134,12 +134,8 @@ class SchemeFragment : Fragment(), Injectable {
         })
 
         bind.addStartPlay.setOnClickListener {
-//            val item = SchemeFragmentDirections.actionNavigationSchemeToNavigationPlay().setLink(schemeViewModel.downloadUrl!!)
-//            findNavController().navigate(item)
-
-            val playFragment = ARouter.getInstance().build("/main/play").navigation() as PlayFragment
-            val ads = ""
-
+            val item = SchemeFragmentDirections.actionNavigationSchemeToNavigationPlay().setLink(schemeViewModel.downloadUrl!!)
+            findNavController().navigate(item)
         }
 
 //        schemeViewModel.testSchemeItem.value?.addOnPropertyChangedCallback()

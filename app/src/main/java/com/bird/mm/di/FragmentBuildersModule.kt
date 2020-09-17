@@ -7,6 +7,7 @@ import com.bird.mm.ui.home.HomeFragment
 import com.bird.mm.ui.notifications.NotificationsFragment
 import com.bird.mm.ui.play.PlayFragment
 import com.bird.mm.ui.scheme.SchemeFragment
+import com.example.android.navigationadvancedsample.homescreen.Title
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -34,5 +35,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributePlayFragment():PlayFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeTitleFragment():Title
 
 }

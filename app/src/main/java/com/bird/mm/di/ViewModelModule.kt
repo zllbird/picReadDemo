@@ -6,6 +6,7 @@ import com.bird.mm.MMViewModelFactory
 import com.bird.mm.ui.background.BGViewModel
 import com.bird.mm.ui.home.HomeDetailViewModel
 import com.bird.mm.ui.home.HomeViewModel
+import com.bird.mm.ui.homescreen.TitleViewModel
 import com.bird.mm.ui.play.PlayViewModel
 import com.bird.mm.ui.scheme.SchemeViewModel
 import dagger.Binds
@@ -41,6 +42,11 @@ abstract class ViewModelModule{
     @IntoMap
     @ViewModelKey(PlayViewModel::class)
     abstract fun bindPlayViewModel(schemeViewModel: PlayViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TitleViewModel::class)
+    abstract fun bindTitleViewModel(schemeViewModel: TitleViewModel):ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: MMViewModelFactory): ViewModelProvider.Factory

@@ -11,6 +11,7 @@ import com.bird.mm.AppExecutors
 import com.bird.mm.R
 import com.bird.mm.databinding.GirlListItemBinding
 import com.bird.mm.ui.common.DataBoundListAdapter
+import com.bird.mm.ui.common.DataBoundPageAdapter
 import com.bird.mm.ui.common.DataBoundViewHolder
 import com.bird.mm.ui.scheme.TestLifeCycleObserver
 import com.bird.mm.vo.Girl
@@ -19,7 +20,7 @@ class GirlAdapter(
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
     private val girlClickCallBack: ((Girl, View)->Unit)?
-):DataBoundListAdapter<Girl,GirlListItemBinding>(
+):DataBoundPageAdapter<Girl,GirlListItemBinding>(
     appExecutors = appExecutors,
     diffCallback = object : DiffUtil.ItemCallback<Girl>(){
         override fun areItemsTheSame(oldItem: Girl, newItem: Girl): Boolean {

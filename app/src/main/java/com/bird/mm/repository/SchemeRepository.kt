@@ -28,7 +28,7 @@ class SchemeRepository @Inject constructor(
 
     fun insert(schemeItem: SchemeItem){
         appExecutors.diskIO().execute {
-            schemeDao.insert(schemeItem)
+            val result = schemeDao.insert(schemeItem)
         }
     }
 

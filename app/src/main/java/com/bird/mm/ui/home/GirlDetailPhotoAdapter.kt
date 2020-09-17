@@ -9,11 +9,12 @@ import com.bird.mm.AppExecutors
 import com.bird.mm.R
 import com.bird.mm.databinding.GirlDetailItemBinding
 import com.bird.mm.ui.common.DataBoundListAdapter
+import com.bird.mm.ui.common.DataBoundPageAdapter
 
 class GirlDetailPhotoAdapter (
     private val dataBindingComponent: DataBindingComponent,
     private val appExecutors: AppExecutors
-):DataBoundListAdapter<String,GirlDetailItemBinding>(
+):DataBoundPageAdapter<String,GirlDetailItemBinding>(
     appExecutors = appExecutors,
     diffCallback = object : DiffUtil.ItemCallback<String>(){
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {

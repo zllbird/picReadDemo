@@ -25,8 +25,11 @@ import com.bird.mm.di.Injectable
 import com.bird.mm.util.XML2List
 import com.bird.mm.util.autoCleared
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.extractor.ts.DefaultTsPayloadReaderFactory
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.source.hls.DefaultHlsExtractorFactory
+import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
@@ -81,23 +84,32 @@ class PlayFragment : Fragment(), Injectable {
             Util.getUserAgent(context!!, "yourApplicationName")
         )
 
+        val dataSourceFactoryEX = DefaultHlsExtractorFactory(
+            DefaultTsPayloadReaderFactory.FLAG_IGNORE_AAC_STREAM,false
+        )
+
         playViewModel.playUrl.observe(viewLifecycleOwner, Observer{
             // This is the MediaSource representing the media to be played.
-            val videoSource: MediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(Uri.parse(it))
-            // Prepare the player with the source.
-            player.prepare(videoSource)
-            player.playWhenReady = true
+//            val videoSource: MediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+//                .createMediaSource(Uri.parse(it))
+//            val videoSource = HlsMediaSource.Factory(dataSourceFactory)
+//                .createMediaSource(Uri.parse(it))
+//            // Prepare the player with the source.
+//            player.prepare(videoSource)
+//            player.playWhenReady = true
         })
 
 //        playViewModel.setPlayUrl(args.link)
 //
-//        // This is the MediaSource representing the media to be played.
+        // This is the MediaSource representing the media to be played.
 //        val videoSource: MediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
 //            .createMediaSource(Uri.parse(args.link))
-//        // Prepare the player with the source.
-//        player.prepare(videoSource)
-//        player.playWhenReady = true
+        val videoSource = HlsMediaSource.Factory(dataSourceFactory)
+            .setExtractorFactory(dataSourceFactoryEX)
+            .createMediaSource(Uri.parse(args.link))
+        // Prepare the player with the source.
+        player.prepare(videoSource)
+        player.playWhenReady = true
     }
 
     fun playVideo(url: String){

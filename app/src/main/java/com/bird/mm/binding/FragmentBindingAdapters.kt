@@ -17,6 +17,7 @@
 package com.bird.mm.binding
 
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
@@ -40,5 +41,12 @@ class FragmentBindingAdapters @Inject constructor(val fragment: Fragment) {
 //            .apply(ro)
             .listener(listener).into(imageView)
     }
+
+    @BindingAdapter("visibleGone")
+    fun showHide(view: View, show: Boolean) {
+        view.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+
 }
 

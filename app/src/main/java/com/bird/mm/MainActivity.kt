@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         currentNavController = controller
 
+//        navView.visibility = View.GONE
+
 //        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 //        val navController = findNavController(R.id.nav_host_fragment)
 //        // Passing each menu ID as a set of Ids because each

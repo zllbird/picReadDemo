@@ -17,12 +17,11 @@ import com.bird.mm.ui.common.DataBoundPageAdapter
 import com.bird.mm.util.Util
 import com.bird.mm.vo.SchemeItem
 
-class SchemeAdapter(
+class TitleAdapter(
     private val dataBindingComponent: DataBindingComponent,
-        appExecutors: AppExecutors,
-    private val viewModel: SchemeViewModel?,
+    appExecutors: AppExecutors,
     private val click: ((SchemeItem?)->Unit) = {}
-): DataBoundPageAdapter<SchemeItem, ShcemeItemBinding>(
+): DataBoundListAdapter<SchemeItem, ShcemeItemBinding>(
     appExecutors = appExecutors,
     diffCallback = object : DiffUtil.ItemCallback<SchemeItem>(){
         override fun areItemsTheSame(oldItem: SchemeItem, newItem: SchemeItem): Boolean {

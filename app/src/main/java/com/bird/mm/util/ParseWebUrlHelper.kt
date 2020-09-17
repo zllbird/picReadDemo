@@ -47,7 +47,7 @@ object ParseWebUrlHelper {
         return this
     }
 
-    private fun initWebSettings() {
+    fun initWebSettings() {
         val mWebView = webView
         mWebView!!.clearFocus()
         val mWebSettings = mWebView.settings
@@ -129,7 +129,7 @@ object ParseWebUrlHelper {
         return this
     }
 
-    private class MyWebViewClient : WebViewClient() {
+    class MyWebViewClient : WebViewClient() {
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         override fun shouldOverrideUrlLoading(
             view: WebView,

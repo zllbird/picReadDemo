@@ -27,7 +27,7 @@ class PlayViewModel @Inject constructor(private val userRepository: UserReposito
 
     fun setPlayUrl(playUrl:String){
         if (_playUrl.value == playUrl){
-            _playUrl.value = playUrl;
+            _playUrl.value = playUrl
         }
     }
 

@@ -31,10 +31,10 @@ import com.bird.mm.AppExecutors
  * @param <T> Type of the items in the list
  * @param <V> The type of the ViewDataBinding
 </V></T> */
-abstract class DataBoundListAdapter<T, V : ViewDataBinding>(
+abstract class DataBoundPageAdapter<T, V : ViewDataBinding>(
     appExecutors: AppExecutors,
     diffCallback: DiffUtil.ItemCallback<T>
-) : ListAdapter<T, DataBoundViewHolder<V>>(
+) : PagedListAdapter<T, DataBoundViewHolder<V>>(
     AsyncDifferConfig.Builder<T>(diffCallback)
         .setBackgroundThreadExecutor(appExecutors.diskIO())
         .build()

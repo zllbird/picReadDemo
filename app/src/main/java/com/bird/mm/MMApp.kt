@@ -6,6 +6,7 @@ import android.os.MessageQueue
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bird.mm.di.AppInjector
 import com.bird.mm.util.MMDebugTree
+import com.connectsdk.discovery.DiscoveryManager
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -25,7 +26,7 @@ class MMApp : Application() , HasActivityInjector {
             ARouter.openDebug()
         }
         AppInjector.init(this)
-
+        DiscoveryManager.init(this)
         ARouter.init(this)
     }
 

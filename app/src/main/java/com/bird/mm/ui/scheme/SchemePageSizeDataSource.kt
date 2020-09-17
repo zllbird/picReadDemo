@@ -31,17 +31,19 @@ class SchemePageSizeDataSource(
         callback: LoadInitialCallback<Int, SchemeItem>
     ) {
         Timber.i("loadInitial ")
-//        val list = schemeDao.query()
         val list = schemeDao.query()
+//        val list = schemeDao.query()
         Timber.i("loadInitial list size is ${list.size}")
         callback.onResult(list,-1,1)
 
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, SchemeItem>) {
+
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, SchemeItem>) {
+
     }
 
 
