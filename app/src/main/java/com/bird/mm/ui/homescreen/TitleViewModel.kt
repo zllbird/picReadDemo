@@ -1,40 +1,52 @@
 package com.bird.mm.ui.homescreen
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.bird.mm.repository.SchemeRepository
 import com.bird.mm.vo.SchemeItem
+import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 class TitleViewModel @Inject constructor(private val schemeRepository: SchemeRepository): ViewModel() {
 
-    var webUrl : String = ""
+    var aliWebUrl : String = "http://fengjing-global.kajicam.com/ad/api/hello"
 
-    var showList: Boolean = true
+    var maxTimes = 1000
 
-    private val _webStatus = MutableLiveData<Int>()
+    private val _load = MutableLiveData<Int>()
 
-    val webStatus = _webStatus
-
-//    private var _urls : LiveData<PagedList<SchemeItem>>? = null
-    private var _urls =MutableLiveData<ArrayList<SchemeItem>>()
-
-    val urls = _urls
-
-    fun loadUrl(){
-        _webStatus.value = 1
+    val datas = _load.switchMap {
+        schemeRepository.queryAli()
     }
 
-    fun initUrls(){
-        _urls.value = arrayListOf()
+    val successNum = datas.map { list ->
+        list.filter { it.status == 200 }.count()
     }
 
-    fun addUrl(url:String){
-         schemeRepository.insert(SchemeItem(0,url))
-        _urls.value?.add(SchemeItem(0,url))
+    val perTimes = datas.map { list ->
+        list.filter { it.status == 200 }.map { it.useTime }.average()
     }
 
+    val maxTime = datas.map { list ->
+        list.filter { it.status == 200 }.map { it.useTime }.max()
+    }
+
+    val minTime = datas.map { list ->
+        list.filter { it.status == 200 }.map { it.useTime }.min()
+    }
+
+    val currentTimes = _load.switchMap {
+        schemeRepository.queryALiCount()
+    }
+
+    fun load(){
+        if (_load.value == null){
+            _load.value = 0
+        }else{
+            _load.value = _load.value!! + 1
+        }
+        schemeRepository.alitest(aliWebUrl,maxTimes)
+    }
 
 }

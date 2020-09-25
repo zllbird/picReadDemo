@@ -17,13 +17,20 @@ data class SchemeItem(
         this.schemeUrl = schemeUrl
     }
 
+    constructor(id: Int,schemeUrl:String,useTime:Long,status:Int): this(id, schemeUrl){
+        this.useTime = useTime
+        this.status = status
+    }
+
 //    var schemeUrl:String = ""
+    var useTime : Long = 0
+    var status : Int = 0
 
     var schemeUrl:String = ""
 
         @Bindable
         get() {
-            Timber.i("SchemeItem schemeUrl is $field")
+//            Timber.i("SchemeItem schemeUrl is $field")
             return field
         }
         set(value) {

@@ -44,4 +44,8 @@ interface ApiService{
     @Streaming
     @GET
     fun downloadU(@Url url:String) : Call<ResponseBody>
+
+    @GET
+    suspend fun aliTestUrl(@Url url: String) : String
+
 }

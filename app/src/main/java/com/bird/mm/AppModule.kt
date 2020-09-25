@@ -7,22 +7,35 @@ import com.bird.mm.di.ViewModelModule
 import com.bird.mm.net.*
 import dagger.Module
 import dagger.Provides
+import okhttp3.EventListener
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.util.logging.Logger
 import javax.inject.Singleton
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
 
+//    @Singleton
+//    @Provides
+//    fun provideHttpEventListener() : EventListener{
+//        return MyOKhttpEventListner()
+//    }
+
     @Singleton
     @Provides
-    fun provideApiService(app: Application):ApiService{
+    fun provideApiService(app: Application, schemeDao:SchemeDao):ApiService{
         return Retrofit.Builder()
             .client(
                 OkHttpClient.Builder()
 //                    .addInterceptor(ChuckerInterceptor(app))
+//                    .addInterceptor(HttpLoggingInterceptor())
+                    .addInterceptor(MyLoggingIntercetor().apply {
+                        mSchemeDao = schemeDao
+                    })
+                    .eventListener(MyOKhttpEventListner())
                     .build()
             )
 //            .addConverterFactory(ScalarsConverterFactory.create())

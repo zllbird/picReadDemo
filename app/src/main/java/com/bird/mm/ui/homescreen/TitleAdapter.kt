@@ -12,6 +12,7 @@ import com.bird.mm.R
 import com.bird.mm.databinding.GirlDetailItemBinding
 import com.bird.mm.databinding.ShcemeItemBinding
 import com.bird.mm.databinding.ShcemeItemBindingImpl
+import com.bird.mm.databinding.TitleItemBinding
 import com.bird.mm.ui.common.DataBoundListAdapter
 import com.bird.mm.ui.common.DataBoundPageAdapter
 import com.bird.mm.util.Util
@@ -21,7 +22,7 @@ class TitleAdapter(
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
     private val click: ((SchemeItem?)->Unit) = {}
-): DataBoundListAdapter<SchemeItem, ShcemeItemBinding>(
+): DataBoundListAdapter<SchemeItem, TitleItemBinding>(
     appExecutors = appExecutors,
     diffCallback = object : DiffUtil.ItemCallback<SchemeItem>(){
         override fun areItemsTheSame(oldItem: SchemeItem, newItem: SchemeItem): Boolean {
@@ -29,15 +30,15 @@ class TitleAdapter(
         }
 
         override fun areContentsTheSame(oldItem: SchemeItem, newItem: SchemeItem): Boolean {
-            return TextUtils.equals(oldItem.schemeUrl,newItem.schemeUrl)
+            return oldItem.id == newItem.id
         }
 
     }
 ) {
-    override fun createBinding(parent: ViewGroup): ShcemeItemBinding {
-        val binding = DataBindingUtil.inflate<ShcemeItemBinding>(
+    override fun createBinding(parent: ViewGroup): TitleItemBinding {
+        val binding = DataBindingUtil.inflate<TitleItemBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.shceme_item,
+            R.layout.title_item,
             parent,
             false,
             dataBindingComponent
@@ -53,7 +54,7 @@ class TitleAdapter(
         return binding
     }
 
-    override fun bind(binding: ShcemeItemBinding, item: SchemeItem, position: Int) {
+    override fun bind(binding: TitleItemBinding, item: SchemeItem, position: Int) {
         binding.schmeItem = item
 //        binding.vm = viewModel
     }

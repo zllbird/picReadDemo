@@ -125,7 +125,7 @@ class SchemeFragment : Fragment(), Injectable {
         }
 //        loadB612()
         bind.addBtnB612.setOnClickListener {
-            loadB612()
+//            loadB612()
             schemeViewModel.setPage(0)
         }
 

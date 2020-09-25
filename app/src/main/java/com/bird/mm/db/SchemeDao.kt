@@ -2,10 +2,7 @@ package com.bird.mm.db
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.bird.mm.vo.SchemeItem
 
 @Dao
@@ -22,4 +19,14 @@ interface SchemeDao {
 
     @Query("SELECT * FROM SchemeItem ORDER BY id DESC")
     suspend fun querySusend():List<SchemeItem>
+
+    @Query("DELETE FROM SchemeItem")
+    fun deleteAll()
+
+    @Query("SELECT * FROM SchemeItem")
+    fun queryAliTest():LiveData<List<SchemeItem>>
+
+    @Query("SELECT COUNT(*) FROM SchemeItem")
+    fun queryAliTestCount():LiveData<Int>
+
 }

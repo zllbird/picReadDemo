@@ -17,6 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 class SchemeRepository @Inject constructor(
@@ -37,6 +38,10 @@ class SchemeRepository @Inject constructor(
             schemeDao.insert(schemeItems)
         }
     }
+
+    fun queryAli() = schemeDao.queryAliTest()
+
+    fun queryALiCount() = schemeDao.queryAliTestCount()
 
     fun query(): Listing<SchemeItem> {
         val sourceFac = SchemePageSizedDataSourceFactory(db,schemeDao)
@@ -69,6 +74,39 @@ class SchemeRepository @Inject constructor(
                 }
             }
 
+        })
+    }
+
+//    suspend fun alitest(url: String): String {
+//        return apiService.aliTestUrl(url)
+//    }
+//
+    fun alitest(url: String,times:Int){
+        appExecutors.diskIO().execute { schemeDao.deleteAll() }
+        testAli(url,1,times)
+    }
+
+    fun testAli(url: String,  current:Int , times: Int){
+        if (current > times) return
+        apiService.unKnowPlayUrl(url).enqueue(object : Callback<String>{
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Timber.i("~~~### onFailure $current")
+                testAli(
+                    url,
+                    current+1,
+                    times
+                )
+
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                Timber.i("~~~### onResponse $current")
+                testAli(
+                    url,
+                    current+1,
+                    times
+                )
+            }
         })
     }
 

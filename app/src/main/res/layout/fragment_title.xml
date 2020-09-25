@@ -23,9 +23,13 @@
         <import type="com.bird.mm.ui.homescreen.TitleViewModel"
             />
 
+        <import type="com.bird.mm.util.Converter"/>
+
         <variable
             name="vm"
             type="TitleViewModel" />
+
+
 
     </data>
 
@@ -36,6 +40,18 @@
         tools:context="com.example.android.navigationadvancedsample.homescreen.Title"
         tools:layout_editor_absoluteY="81dp">
 
+        <TextView
+            android:id="@+id/tv_ali"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="阿里云海外测试地址(Ali-Test_URL)："
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            />
+
         <EditText
             android:id="@+id/et_url"
             android:layout_marginTop="30dp"
@@ -45,16 +61,28 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={vm.webUrl}"
+            android:text="@={vm.aliWebUrl}"
             />
 
-        <Button
-            android:id="@+id/btn_device"
+        <TextView
+            android:id="@+id/tv_times"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/et_url"
+            android:text="Count:"
             app:layout_constraintLeft_toLeftOf="@id/et_url"
-            android:text="设备"
+            app:layout_constraintTop_toTopOf="@id/et_num"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/et_num"
+            />
+
+        <EditText
+            android:id="@+id/et_num"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/et_url"
+            app:layout_constraintLeft_toRightOf="@id/tv_times"
+            android:textColor="@color/hint"
+            android:text="@={Converter.intToString(vm.maxTimes)}"
             />
 
         <Button
@@ -62,35 +90,88 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/et_url"
-            app:layout_constraintLeft_toRightOf="@id/btn_device"
-            android:text="LOAD"
-            android:onClick="@{v-> vm.loadUrl()}"
+            app:layout_constraintLeft_toRightOf="@id/et_num"
+            android:text="SUBMIT"
+            android:onClick="@{v-> vm.load()}"
             />
 
-        <CheckBox
-            android:id="@+id/cb_list"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#000000"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/et_num"
+            />
+
+        <TextView
+            android:id="@+id/tv_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SHOWLIST"
-            app:layout_constraintTop_toBottomOf="@id/et_url"
-            app:layout_constraintLeft_toRightOf="@id/btn_load"
-            android:checked="@={vm.showList}"
+            app:layout_constraintTop_toBottomOf="@id/et_num"
+            app:layout_constraintLeft_toLeftOf="@id/et_url"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/title"
+            android:layout_marginTop="5dp"
             />
 
-        <WebView
-            android:id="@+id/web"
-            app:layout_constraintTop_toBottomOf="@id/btn_device"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
+        <TextView
+            android:id="@+id/tv_result_su"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_result"
+            app:layout_constraintLeft_toLeftOf="@id/tv_result"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/title"
+            />
+
+        <TextView
+            android:id="@+id/tv_result_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_result_su"
+            app:layout_constraintLeft_toLeftOf="@id/et_url"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/title"
+            />
+
+        <TextView
+            android:id="@+id/tv_result_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_result_min"
+            app:layout_constraintLeft_toLeftOf="@id/et_url"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/title"
+            />
+
+        <TextView
+            android:id="@+id/tv_result_per"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_result_max"
+            app:layout_constraintLeft_toLeftOf="@id/et_url"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/title"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_urls"
+            android:id="@+id/rv_items"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            app:layout_constraintBottom_toBottomOf="@id/web"
-            app:visibleGone="@{vm.showList}"
-            android:background="@color/colorAccent"
+            android:layout_marginTop="10dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_result_per"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
