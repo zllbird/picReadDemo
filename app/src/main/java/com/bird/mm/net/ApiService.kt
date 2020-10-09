@@ -1,6 +1,7 @@
 package com.bird.mm.net
 
 import androidx.lifecycle.LiveData
+import com.bird.mm.vo.AliTest
 import com.bird.mm.vo.User
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -47,5 +48,8 @@ interface ApiService{
 
     @GET
     suspend fun aliTestUrl(@Url url: String) : String
+
+    @POST
+    suspend fun aliTestPost(@Url url:String , @Body aliTest:AliTest) : String
 
 }

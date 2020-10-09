@@ -93,9 +93,13 @@ class Title : Fragment() , Injectable {
         }
         bind.rvItems.adapter = adapter
 
-        titleViewModel.currentTimes.observe(viewLifecycleOwner, Observer {
+        titleViewModel.aliCase.observe(viewLifecycleOwner , Observer {
             bind.tvResult.text = "Current：$it"
         })
+
+//        titleViewModel.currentTimes.observe(viewLifecycleOwner, Observer {
+//            bind.tvResult.text = "Current：$it"
+//        })
 
         titleViewModel.datas.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)

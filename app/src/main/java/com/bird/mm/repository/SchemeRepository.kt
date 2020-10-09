@@ -6,10 +6,9 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.bird.mm.AppExecutors
 import com.bird.mm.db.*
-import com.bird.mm.net.ApiMTWService
-import com.bird.mm.net.ApiService
-import com.bird.mm.net.ApiTDService
+import com.bird.mm.net.*
 import com.bird.mm.ui.scheme.SchemePageSizedDataSourceFactory
+import com.bird.mm.vo.AliTest
 import com.bird.mm.vo.Listing
 import com.bird.mm.vo.SchemeItem
 import okhttp3.ResponseBody
@@ -81,6 +80,26 @@ class SchemeRepository @Inject constructor(
 //        return apiService.aliTestUrl(url)
 //    }
 //
+//{
+//    "appId": "b612",
+//    "appVersion": "9.9.0",
+//    "stickerId": "1",
+//    "os": "android",
+//    "sdkVersion": "1.10.0",
+//    "exposureRecordList": [
+//    ]
+//}
+    suspend fun alitestSus(url: String): MMResource<String>{
+       return try {
+            val result = apiService.aliTestPost(url,
+                AliTest("b612","9.9.0", listOf(),"android","1.10.0","1"))
+            MMResource.create(result)
+        }catch (e:Throwable){
+            e.printStackTrace()
+            MMResource.createError(e)
+        }
+    }
+
     fun alitest(url: String,times:Int){
         appExecutors.diskIO().execute { schemeDao.deleteAll() }
         testAli(url,1,times)

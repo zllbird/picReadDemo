@@ -54,6 +54,10 @@ class SchemeViewModel @Inject constructor(private val schemeRepository: SchemeRe
         schemeRepository.query().pagedList
     }
 
+    fun userLiveTest(){
+        userLive
+    }
+
 //    private val _testSchemeItem = MutableLiveData<Int>()
     private val _testSchemeItem = MutableLiveData<SchemeItem>()
 

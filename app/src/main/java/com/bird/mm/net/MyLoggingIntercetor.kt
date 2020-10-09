@@ -117,7 +117,7 @@ class MyLoggingIntercetor @JvmOverloads constructor(private val logger: Logger =
 
     @Volatile
     var level =
-        Level.BASIC
+        Level.BODY
         private set
 
     var mSchemeDao:SchemeDao? = null

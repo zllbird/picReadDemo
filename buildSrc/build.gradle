@@ -1,0 +1,30 @@
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'kotlin'
+apply plugin: 'maven'
+
+buildscript {
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72"
+    }
+}
+
+repositories {
+    // this repo should be available in every subproject that uses kotlin
+    jcenter()
+    mavenCentral() // or jcentrer
+}
+
+dependencies {
+    compileOnly gradleApi()
+    implementation localGroovy()
+//    implementation 'com.android.tools.build:gradle:3.4.1'
+//    implementation 'org.ow2.asm:asm:7.1'
+//    implementation 'org.ow2.asm:asm-commons:5.0.3'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}

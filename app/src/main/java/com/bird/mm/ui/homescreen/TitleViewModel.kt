@@ -2,19 +2,32 @@ package com.bird.mm.ui.homescreen
 
 import androidx.lifecycle.*
 import androidx.paging.PagedList
+import com.bird.mm.net.MMResource
+import com.bird.mm.repository.MMNetResource
 import com.bird.mm.repository.SchemeRepository
 import com.bird.mm.vo.SchemeItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 class TitleViewModel @Inject constructor(private val schemeRepository: SchemeRepository): ViewModel() {
 
-    var aliWebUrl : String = "http://fengjing-global.kajicam.com/ad/api/hello"
+//    var aliWebUrl : String = "http://fengjing-global.kajicam.com/ad/api/hello"
+    var aliWebUrl : String = "http://ad-global-rule.kajicam.com/ad/splash/rule/api/v2/"
 
     var maxTimes = 1000
 
     private val _load = MutableLiveData<Int>()
+
+    val aliCase = _load.switchMap {
+        liveData(Dispatchers.IO) {
+            while (maxTimes > 0) {
+                maxTimes--
+                emit(schemeRepository.alitestSus(aliWebUrl))
+            }
+        }
+    }
 
     val datas = _load.switchMap {
         schemeRepository.queryAli()
@@ -44,9 +57,9 @@ class TitleViewModel @Inject constructor(private val schemeRepository: SchemeRep
         if (_load.value == null){
             _load.value = 0
         }else{
-            _load.value = _load.value!! + 1
+            _load.value = 1
         }
-        schemeRepository.alitest(aliWebUrl,maxTimes)
+//        schemeRepository.alitest(aliWebUrl,maxTimes)
     }
 
 }

@@ -43,7 +43,7 @@ class AppModule {
 //            .baseUrl("http://1205.jeffreyvandiggele.nl/")
             .baseUrl("https://www.2717.com/")
             .addConverterFactory(MMCoverterFactory.create())
-//            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
             .create(ApiService::class.java)
