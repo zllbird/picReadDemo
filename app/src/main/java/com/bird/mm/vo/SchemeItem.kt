@@ -22,7 +22,13 @@ data class SchemeItem(
         this.status = status
     }
 
+    constructor(id: Int,schemeUrl:String,useTime:Long,status:Int,filePath:String):this(id, schemeUrl, useTime, status){
+        this.filePath = filePath
+    }
+
 //    var schemeUrl:String = ""
+    var filePath :String = ""
+
     var useTime : Long = 0
     var status : Int = 0
 

@@ -7,6 +7,8 @@
         <import type="com.bird.mm.ui.scheme.SchemeViewModel"/>
         <import type="com.bird.mm.vo.SchemeItem"/>
 
+        <import type="com.bird.mm.util.Converter"/>
+
         <variable
             name="schmeItem"
             type="SchemeItem" />
@@ -41,6 +43,7 @@
             android:text="@{schmeItem.schemeUrl}"
             android:checked="@{ vm.selectUrl == schmeItem.schemeUrl}"
             android:clickable="false"
+            android:visibility="gone"
             />
 
         <TextView
@@ -51,8 +54,15 @@
             android:textSize="20sp"
             android:maxLines="3"
             android:text="@{schmeItem.schemeUrl}"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@{Converter.longToString(schmeItem.useTime)}"
+            />
 
         <Button
             android:id="@+id/btn_copy"
@@ -61,6 +71,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="复制"
+            android:visibility="gone"
             />
 
         <View

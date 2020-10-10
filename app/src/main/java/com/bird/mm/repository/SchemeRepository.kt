@@ -48,10 +48,10 @@ class SchemeRepository @Inject constructor(
         val sourceFac = SchemePageSizedDataSourceFactory(db,schemeDao)
         val pageList = sourceFac.toLiveData(
             config = Config(
-                pageSize = 10,
+                pageSize = 50,
                 enablePlaceholders = false,
                 prefetchDistance = 4,
-                initialLoadSizeHint = 10
+                initialLoadSizeHint = 50
             ),
             fetchExecutor = appExecutors.networkIO()
         )

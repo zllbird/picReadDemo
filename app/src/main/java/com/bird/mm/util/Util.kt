@@ -3,12 +3,15 @@ package com.bird.mm.util
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.Toast
+import java.io.File
 
 class Util {
 
@@ -90,6 +93,12 @@ class Util {
             }
         }
 
+
+        fun sendFlushFileChanged(file: File, context: Context){
+            val contentUri = Uri.fromFile(file)
+            val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,contentUri)
+            context.sendBroadcast(mediaScanIntent)
+        }
     }
 
 

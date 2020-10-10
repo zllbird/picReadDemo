@@ -44,6 +44,7 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
             />
 
         <Button
@@ -53,6 +54,7 @@
             app:layout_constraintTop_toBottomOf="@id/input"
             app:layout_constraintRight_toRightOf="parent"
             android:text="Add"
+            android:visibility="gone"
             />
 
         <Button
@@ -62,7 +64,7 @@
             app:layout_constraintTop_toBottomOf="@id/input"
             app:layout_constraintRight_toLeftOf="@id/add_btn"
             android:text="Add-B612"
-            android:visibility="visible"
+            android:visibility="gone"
             />
 
         <Button
@@ -73,6 +75,7 @@
             app:layout_constraintRight_toLeftOf="@id/add_btn_b612"
             android:text="download"
             android:onClick="@{v -> vm.startDownload()}"
+            android:visibility="gone"
             />
 
         <Button
@@ -82,6 +85,7 @@
             app:layout_constraintTop_toBottomOf="@id/input"
             app:layout_constraintRight_toLeftOf="@id/add_download"
             android:text="start_play"
+            android:visibility="gone"
             />
 
         <androidx.recyclerview.widget.RecyclerView

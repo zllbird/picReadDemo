@@ -3,7 +3,12 @@ package com.bird.mm.util
 import android.app.Activity
 import android.app.Application
 import android.content.ComponentCallbacks
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
+import com.bird.mm.MMApp
+import java.io.File
 
 class ScreenUtil {
 
@@ -51,4 +56,5 @@ class ScreenUtil {
         acitivtyDisplayMetrics.densityDpi = targetDensityDpi
 
     }
+
 }
