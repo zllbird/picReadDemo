@@ -22,6 +22,7 @@ class TitleViewModel @Inject constructor(private val schemeRepository: SchemeRep
 
     val aliCase = _load.switchMap {
         liveData(Dispatchers.IO) {
+            schemeRepository.deleteAllAliTest()
             while (maxTimes > 0) {
                 maxTimes--
                 emit(schemeRepository.alitestSus(aliWebUrl))
@@ -31,6 +32,7 @@ class TitleViewModel @Inject constructor(private val schemeRepository: SchemeRep
 
     val datas = _load.switchMap {
         schemeRepository.queryAli()
+//        schemeRepository.showQQList()
     }
 
     val successNum = datas.map { list ->
@@ -38,7 +40,7 @@ class TitleViewModel @Inject constructor(private val schemeRepository: SchemeRep
     }
 
     val perTimes = datas.map { list ->
-        list.filter { it.status == 200 }.map { it.useTime }.average()
+        list.filter { it.status == 200 }.map { it.useTime }.filter { it < 1000 }.average()
     }
 
     val maxTime = datas.map { list ->

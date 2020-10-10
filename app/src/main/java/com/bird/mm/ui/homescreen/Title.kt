@@ -16,9 +16,8 @@
 
 package com.example.android.navigationadvancedsample.homescreen
 
-import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,22 +32,14 @@ import com.bird.mm.R
 import com.bird.mm.binding.FragmentDataBindingComponent
 import com.bird.mm.databinding.FragmentTitleBinding
 import com.bird.mm.di.Injectable
-import com.bird.mm.ui.home.GirlAdapter
 import com.bird.mm.ui.homescreen.TitleViewModel
-import com.bird.mm.ui.scheme.SchemeAdapter
 import com.bird.mm.ui.scheme.TitleAdapter
-import com.bird.mm.util.Util
+import com.bird.mm.util.QmcDecoder
 import com.bird.mm.util.autoCleared
-import com.connectsdk.core.MediaInfo
-import com.connectsdk.device.ConnectableDevice
-import com.connectsdk.device.ConnectableDeviceListener
-import com.connectsdk.device.DevicePicker
-import com.connectsdk.discovery.DiscoveryManager
-import com.connectsdk.service.DeviceService
-import com.connectsdk.service.DeviceService.PairingType
-import com.connectsdk.service.capability.MediaPlayer
-import com.connectsdk.service.command.ServiceCommandError
 import timber.log.Timber
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStreamReader
 import javax.inject.Inject
 
 /**
@@ -94,7 +85,7 @@ class Title : Fragment() , Injectable {
         bind.rvItems.adapter = adapter
 
         titleViewModel.aliCase.observe(viewLifecycleOwner , Observer {
-            bind.tvResult.text = "Current：$it"
+//            bind.tvResult.text = "Current：$it"
         })
 
 //        titleViewModel.currentTimes.observe(viewLifecycleOwner, Observer {
@@ -121,10 +112,72 @@ class Title : Fragment() , Injectable {
             bind.tvResultMax.text = "MaxTime：%d(ms)".format(it)
         })
 
-
-
-
     }
+
+    fun cusDecode(){
+        val rootDir = context?.getExternalFilesDir(null)
+        val qmcFlacDir = File(rootDir,"qmcflac")
+        val qmcFlacFile = File(qmcFlacDir , "1.qmcflac")
+
+        Timber.i("qmcFlacFile.isFile ${qmcFlacFile.isFile}")
+        Timber.i("qmcFlacFile.path ${qmcFlacFile.path}")
+        Timber.i("qmcFlacFile.path ${qmcFlacFile.absolutePath}")
+
+        val result = QmcDecoder().covert(qmcFlacFile)
+        Timber.i("QmcDecoder $result")
+    }
+
+    fun execNotWork(){
+        appExecutors.diskIO().run {
+//            val rootDir = Environment.getExternalStorageDirectory()
+//            val qmcFlacDir = File(rootDir , "/Huawei/CloudDrive/Download/Huawei Drive/qmcflac")
+
+            val rootDir = context?.getExternalFilesDir(null)
+            val qmcFlacDir = File(rootDir,"qmcflac")
+            val qmcFlacDecodeCommond = File(qmcFlacDir , "decoder.command")
+            val qmcFlacDecode = File(qmcFlacDir , "decoder")
+
+            Timber.i("qmcFlacDir.isDirectory ${qmcFlacDir.isDirectory}")
+            Timber.i("qmcFlacDecodeCommond.isFile ${qmcFlacDecodeCommond.isFile}")
+            Timber.i("qmcFlacDecodeCommond.canExecute ${qmcFlacDecodeCommond.canExecute()}")
+            Timber.i("qmcFlacDecode.canExecute ${qmcFlacDecode.canExecute()}")
+
+            val p = Runtime.getRuntime().exec("decoder.command")
+//            val resultCode = result.waitFor()
+//            Timber.i("resultCode $resultCode")
+
+            var data: String? = null
+            val ie = BufferedReader(InputStreamReader(p.getErrorStream()))
+            val `in` = BufferedReader(InputStreamReader(p.getInputStream()))
+            var error: String? = null
+            while (ie.readLine().also({ error = it }) != null
+                && error != "null"
+            ) {
+                data += """
+                    $error
+                    
+                    """.trimIndent()
+            }
+            var line: String? = null
+            while (`in`.readLine().also({ line = it }) != null
+                && line != "null"
+            ) {
+                data += """
+                    $line
+                    
+                    """.trimIndent()
+            }
+
+            Timber.i(data)
+
+
+        }
+    }
+
+//    fun testCommond(){
+//        val assetManager = context?.assets
+//        assetManager?.list()
+//    }
 //    }
 //
 //    fun initConnect(){

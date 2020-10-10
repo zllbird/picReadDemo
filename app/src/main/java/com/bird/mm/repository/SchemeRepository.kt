@@ -1,5 +1,6 @@
 package com.bird.mm.repository
 
+import android.os.Environment
 import androidx.lifecycle.LiveData
 import androidx.paging.Config
 import androidx.paging.PagedList
@@ -16,6 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
@@ -75,6 +77,18 @@ class SchemeRepository @Inject constructor(
 
         })
     }
+
+    fun deleteAllAliTest(){
+        schemeDao.deleteAll()
+    }
+
+//    fun showQQList():LiveData<List<SchemeItem>>{
+//        val root = Environment.getExternalStoragePublicDirectory(null).absolutePath
+//        val qqMusicDir = File(root,"/qqmusic/song")
+//        if (qqMusicDir.isDirectory){
+//            qqMusicDir.list()
+//        }
+//    }
 
 //    suspend fun alitest(url: String): String {
 //        return apiService.aliTestUrl(url)
