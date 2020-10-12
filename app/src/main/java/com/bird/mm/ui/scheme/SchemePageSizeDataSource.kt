@@ -49,11 +49,12 @@ class SchemePageSizeDataSource(
         val qqMusicDir = File(root, "/qqmusic/song")
 
         return if (qqMusicDir.isDirectory) {
-            val list = qqMusicDir.listFiles()
-
-            list?.map {
-                SchemeItem(0,it.name,it.lastModified(),0,it.path)
-            }?.sortedByDescending { it.useTime }
+            val list = qqMusicDir.listFiles().filter { it.name.contains("qmc") }
+            list.map {
+                val name = it.name.split("[")[0]
+                val extFile = it.name.substring(it.name.lastIndexOf(".")+1)
+                SchemeItem(0,name,it.lastModified(),0,it.path,extFile)
+            }.sortedByDescending { it.useTime }
         }else {
             emptyList()
         }

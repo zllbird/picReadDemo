@@ -2,20 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/mobile_navigation"
+        android:icon="@drawable/ic_local_cafe_black_24dp"
+        android:title="MusicConverter" />
+
+    <item
         android:id="@+id/home"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="1"
+        android:title="Home"
         />
 
     <item
         android:id="@+id/list"
         android:icon="@drawable/ic_photo_size_select_actual_black_24dp"
-        android:title="2" />
+        android:title="List" />
 
-    <item
-        android:id="@+id/mobile_navigation"
-        android:icon="@drawable/ic_local_cafe_black_24dp"
-        android:title="3" />
+
 
 <!--    <item-->
 <!--        android:id="@+id/navigation_home"-->

@@ -8,5 +8,6 @@
 
     <color name="title">#F45656</color>
     <color name="hint">#32C5FF</color>
+    <color name="hintLine">#2032C5FF</color>
 
 </resources>

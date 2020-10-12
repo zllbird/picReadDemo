@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 //        val fragmentNavigator = FixFragmentNavigator(this,supportFragmentManager,R.id.nav_host_fragment)
 //        navController.navigatorProvider.addNavigator(fragmentNavigator)
 
-        val navIds = listOf(R.navigation.home, R.navigation.list, R.navigation.mobile_navigation)
+//        val navIds = listOf(R.navigation.home, R.navigation.list, R.navigation.mobile_navigation)
+        val navIds = listOf(R.navigation.mobile_navigation)
         val controller = navView.setupWithNavController(
             navGraphIds = navIds,
             fragmentManager = supportFragmentManager,
@@ -61,7 +62,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         currentNavController = controller
 
-        navView.visibility = View.VISIBLE
+//        navView.visibility = View.VISIBLE
+        navView.visibility = View.GONE
 
 //        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 //        val navController = findNavController(R.id.nav_host_fragment)
