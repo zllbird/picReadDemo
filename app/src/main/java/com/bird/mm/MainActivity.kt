@@ -48,7 +48,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 //        navController.navigatorProvider.addNavigator(fragmentNavigator)
 
 //        val navIds = listOf(R.navigation.home, R.navigation.list, R.navigation.mobile_navigation)
-        val navIds = listOf(R.navigation.mobile_navigation)
+        val navIds = listOf(R.navigation.home)
+//        val navIds = listOf(R.navigation.mobile_navigation)
         val controller = navView.setupWithNavController(
             navGraphIds = navIds,
             fragmentManager = supportFragmentManager,

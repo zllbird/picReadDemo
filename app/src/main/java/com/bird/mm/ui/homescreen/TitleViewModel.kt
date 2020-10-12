@@ -1,5 +1,8 @@
 package com.bird.mm.ui.homescreen
 
+import androidx.databinding.Bindable
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.bird.mm.net.MMResource
@@ -14,25 +17,31 @@ import javax.inject.Inject
 class TitleViewModel @Inject constructor(private val schemeRepository: SchemeRepository): ViewModel() {
 
 //    var aliWebUrl : String = "http://fengjing-global.kajicam.com/ad/api/hello"
-    var aliWebUrl : String = "http://ad-global-rule.kajicam.com/ad/splash/rule/api/v2/"
 
-    var maxTimes = 1000
+    var ga : ObservableBoolean = ObservableBoolean(true)
+
+    var aliGaWebUrl : String = "http://ad-global-rule.kajicam.com/ad/splash/rule/api/v2/"
+    var aliNotGaWebUrl : String = "http://ad-global-rule2.kajicam.com/ad/splash/rule/api/v2/"
+
+    var maxTimes : ObservableInt = ObservableInt(100)
 
     private val _load = MutableLiveData<Int>()
 
     val aliCase = _load.switchMap {
         liveData(Dispatchers.IO) {
             schemeRepository.deleteAllAliTest()
-            while (maxTimes > 0) {
-                maxTimes--
-                emit(schemeRepository.alitestSus(aliWebUrl))
+            val cache = maxTimes.get()
+            while (maxTimes.get() > 0) {
+                maxTimes.set(maxTimes.get() -1)
+                var url = if (ga.get()) aliGaWebUrl else aliNotGaWebUrl
+                emit(schemeRepository.alitestSus(url))
             }
+            maxTimes.set(cache)
         }
     }
 
     val datas = _load.switchMap {
         schemeRepository.queryAli()
-//        schemeRepository.showQQList()
     }
 
     val successNum = datas.map { list ->
@@ -51,6 +60,14 @@ class TitleViewModel @Inject constructor(private val schemeRepository: SchemeRep
         list.filter { it.status == 200 }.map { it.useTime }.min()
     }
 
+    val lager300 = datas.map { list ->
+        list.filter { it.status == 200 }.map { it.useTime }.count { it > 300 }
+    }
+
+    val lager500 = datas.map { list ->
+        list.filter { it.status == 200 }.map { it.useTime }.count { it > 500 }
+    }
+
     val currentTimes = _load.switchMap {
         schemeRepository.queryALiCount()
     }
@@ -59,9 +76,8 @@ class TitleViewModel @Inject constructor(private val schemeRepository: SchemeRep
         if (_load.value == null){
             _load.value = 0
         }else{
-            _load.value = 1
+            _load.value = _load.value!! + 1
         }
-//        schemeRepository.alitest(aliWebUrl,maxTimes)
     }
 
 }

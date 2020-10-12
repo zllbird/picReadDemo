@@ -2,14 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/mobile_navigation"
-        android:icon="@drawable/ic_local_cafe_black_24dp"
-        android:title="MusicConverter" />
-
-    <item
         android:id="@+id/home"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="Home"
+        android:title="Ali_GA_TEST"
         />
 
     <item
@@ -17,6 +12,10 @@
         android:icon="@drawable/ic_photo_size_select_actual_black_24dp"
         android:title="List" />
 
+    <item
+        android:id="@+id/mobile_navigation"
+        android:icon="@drawable/ic_local_cafe_black_24dp"
+        android:title="MusicConverter" />
 
 
 <!--    <item-->

@@ -112,6 +112,14 @@ class Title : Fragment() , Injectable {
             bind.tvResultMax.text = "MaxTime：%d(ms)".format(it)
         })
 
+        titleViewModel.lager300.observe(viewLifecycleOwner, Observer {
+            bind.tvResultLager300.text = "OVER 300ms Count ：%d".format(it)
+        })
+
+        titleViewModel.lager500.observe(viewLifecycleOwner, Observer {
+            bind.tvResultLager500.text = "OVER 500ms Count ：%d".format(it)
+        })
+
     }
 
     fun cusDecode(){
