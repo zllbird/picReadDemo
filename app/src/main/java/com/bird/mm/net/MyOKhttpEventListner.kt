@@ -1,39 +1,75 @@
 package com.bird.mm.net
 
+import com.bird.mm.db.SchemeDao
+import com.bird.mm.vo.HttpEventTime
+import com.bird.mm.vo.SchemeItem
 import okhttp3.*
 import timber.log.Timber
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Proxy
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 class MyOKhttpEventListner : EventListener() {
 
     var dnsStart = 0L
 
+    @Inject
+    lateinit var schemeDao: SchemeDao
+
+    var eventTime: HttpEventTime? = null
+
     override fun callStart(call: Call) {
         super.callStart(call)
+        eventTime = HttpEventTime()
+        eventTime?.callStartTime = System.nanoTime()
     }
 
     override fun callEnd(call: Call) {
         super.callEnd(call)
+        eventTime?.callEndTime = System.nanoTime()
+
+        val schemeItem = SchemeItem(0)
+
+        schemeItem.callTime = TimeUnit.NANOSECONDS.toMillis(eventTime!!.callStartTime - eventTime!!.callEndTime)
+        schemeItem.dnsTime = TimeUnit.NANOSECONDS.toMillis(eventTime!!.dnsStartTime - eventTime!!.dnsEndTime)
+        schemeItem.connectionTime = TimeUnit.NANOSECONDS.toMillis(eventTime!!.connectionStartTime - eventTime!!.connectionEndTime)
+        schemeItem.connectTime = TimeUnit.NANOSECONDS.toMillis(eventTime!!.connectStartTime - eventTime!!.connectEndTime)
+
+//        schemeItem.inetAddressList = eventTime?.inetAddressList
+
+        eventTime?.inetAddressList?.forEach {
+            Timber.i("Dns Use Time : ${it.address}")
+            Timber.i("Dns Use Time : ${it.hostAddress}")
+            Timber.i("Dns Use Time : ${it.hostName}")
+            Timber.i("Dns Use Time : ${it.canonicalHostName}")
+        }
+
+        schemeDao.insert(schemeItem)
+        eventTime = null
+
     }
 
     override fun dnsStart(call: Call, domainName: String) {
         super.dnsStart(call, domainName)
         dnsStart = System.nanoTime()
+        eventTime?.dnsStartTime = System.nanoTime()
     }
 
     override fun dnsEnd(call: Call, domainName: String, inetAddressList: MutableList<InetAddress>) {
         super.dnsEnd(call, domainName, inetAddressList)
         val dur = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - dnsStart)
         Timber.i("Dns Use Time : $dur")
+        eventTime?.dnsEndTime = System.nanoTime()
+        eventTime?.inetAddressList = inetAddressList
     }
 
     override fun connectStart(call: Call, inetSocketAddress: InetSocketAddress, proxy: Proxy) {
         super.connectStart(call, inetSocketAddress, proxy)
         Timber.i("connectStart Time ${System.currentTimeMillis()}")
+        eventTime?.connectStartTime = System.nanoTime()
     }
 
     override fun connectEnd(
@@ -44,6 +80,17 @@ class MyOKhttpEventListner : EventListener() {
     ) {
         super.connectEnd(call, inetSocketAddress, proxy, protocol)
         Timber.i("connectEnd Time ${System.currentTimeMillis()}")
+        eventTime?.connectEndTime = System.nanoTime()
+    }
+
+    override fun connectionAcquired(call: Call, connection: Connection) {
+        super.connectionAcquired(call, connection)
+        eventTime?.connectionStartTime = System.nanoTime()
+    }
+
+    override fun connectionReleased(call: Call, connection: Connection) {
+        super.connectionReleased(call, connection)
+        eventTime?.connectionEndTime = System.nanoTime()
     }
 
     override fun requestHeadersStart(call: Call) {

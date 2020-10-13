@@ -7,6 +7,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bird.mm.BR
 import timber.log.Timber
+import java.net.InetAddress
 
 @Entity
 data class SchemeItem(
@@ -26,6 +27,14 @@ data class SchemeItem(
         this.filePath = filePath
         this.fileType = fileType
     }
+
+    var callTime:Long = 0
+
+    var dnsTime:Long = 0
+
+    var connectTime:Long = 0
+
+    var connectionTime :Long = 0
 
 //    var schemeUrl:String = ""
     var filePath :String = ""
