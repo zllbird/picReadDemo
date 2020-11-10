@@ -21,6 +21,7 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -119,6 +120,11 @@ class Title : Fragment() , Injectable {
         titleViewModel.lager500.observe(viewLifecycleOwner, Observer {
             bind.tvResultLager500.text = "OVER 500ms Count ：%d".format(it)
         })
+
+        bind.seekFirst.setRange(18f,80f,1f)
+
+        bind.seekFirst.progressRight = 80
+
 
     }
 

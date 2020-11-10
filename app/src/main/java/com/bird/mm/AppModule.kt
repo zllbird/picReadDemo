@@ -32,10 +32,10 @@ class AppModule {
                 OkHttpClient.Builder()
 //                    .addInterceptor(ChuckerInterceptor(app))
 //                    .addInterceptor(HttpLoggingInterceptor())
-                    .addInterceptor(MyLoggingIntercetor().apply {
-                        mSchemeDao = schemeDao
-                    })
-                    .eventListener(MyOKhttpEventListner())
+//                    .addInterceptor(MyLoggingIntercetor().apply {
+//                        mSchemeDao = schemeDao
+//                    })
+                    .eventListener(MyOKhttpEventListner(schemeDao))
                     .build()
             )
 //            .addConverterFactory(ScalarsConverterFactory.create())

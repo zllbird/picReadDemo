@@ -63,15 +63,17 @@ class SchemeRepository @Inject constructor(
     fun download(url:String){
         apiService.downloadU(url).enqueue(object : Callback<ResponseBody>{
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Timber.i("~~~### onFailure")
+                Timber.e("~~~### onFailure" )
+                Timber.e(t)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Timber.i("~~~### onResponse")
                 try {
                     val body = response.body()?.byteStream()
+                    Timber.i("~~~### body size is ${body?.available()}")
                 }catch (t: Throwable){
-
+                    Timber.e(t)
                 }
             }
 

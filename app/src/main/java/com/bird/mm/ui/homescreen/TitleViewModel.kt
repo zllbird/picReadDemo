@@ -20,10 +20,10 @@ class TitleViewModel @Inject constructor(private val schemeRepository: SchemeRep
 
     var ga : ObservableBoolean = ObservableBoolean(true)
 
-//    var aliGaWebUrl : String = "http://ad-global-rule.kajicam.com/ad/splash/rule/api/v2/"
-    var aliGaWebUrl : String = "http://149.129.4.199/ad/splash/rule/api/v2/"
-//    var aliNotGaWebUrl : String = "http://ad-global-rule2.kajicam.com/ad/splash/rule/api/v2/"
-    var aliNotGaWebUrl : String = "http://8.210.192.108.kajicam.com/ad/splash/rule/api/v2/"
+    var aliGaWebUrl : String = "http://ad-global-rule.kajicam.com/ad/splash/rule/api/v2/"
+//    var aliGaWebUrl : String = "http://149.129.4.199/ad/splash/rule/api/v2/"
+    var aliNotGaWebUrl : String = "http://ad-global-rule2.kajicam.com/ad/splash/rule/api/v2/"
+//    var aliNotGaWebUrl : String = "http://8.210.192.108/ad/splash/rule/api/v2/"
 
     var maxTimes : ObservableInt = ObservableInt(100)
 

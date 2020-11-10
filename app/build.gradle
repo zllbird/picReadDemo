@@ -104,6 +104,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
 //    implementation (name:'GDTSDK.unionNormal.4.176.1046', ext:'aar')
+    implementation (name:'lib-yrkad-int-1.0.0_b612-debug', ext:'aar')
 //    implementation project(":common")
 
     implementation deps.app_compat
@@ -171,5 +172,7 @@ dependencies {
     kapt 'com.alibaba:arouter-compiler:1.2.2'
 
     implementation 'com.github.ConnectSDK:Connect-SDK-Android-Lite:master-SNAPSHOT'
+
+    implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
 
 }

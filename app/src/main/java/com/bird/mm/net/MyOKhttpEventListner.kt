@@ -12,12 +12,9 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
-class MyOKhttpEventListner : EventListener() {
+class MyOKhttpEventListner(val schemeDao: SchemeDao) : EventListener() {
 
     var dnsStart = 0L
-
-    @Inject
-    lateinit var schemeDao: SchemeDao
 
     var eventTime: HttpEventTime? = null
 
@@ -31,15 +28,7 @@ class MyOKhttpEventListner : EventListener() {
         super.callEnd(call)
         eventTime?.callEndTime = System.nanoTime()
 
-        val schemeItem = SchemeItem(0)
-
-        schemeItem.callTime = TimeUnit.NANOSECONDS.toMillis(eventTime!!.callStartTime - eventTime!!.callEndTime)
-        schemeItem.dnsTime = TimeUnit.NANOSECONDS.toMillis(eventTime!!.dnsStartTime - eventTime!!.dnsEndTime)
-        schemeItem.connectionTime = TimeUnit.NANOSECONDS.toMillis(eventTime!!.connectionStartTime - eventTime!!.connectionEndTime)
-        schemeItem.connectTime = TimeUnit.NANOSECONDS.toMillis(eventTime!!.connectStartTime - eventTime!!.connectEndTime)
-
 //        schemeItem.inetAddressList = eventTime?.inetAddressList
-
         eventTime?.inetAddressList?.forEach {
             Timber.i("Dns Use Time : ${it.address}")
             Timber.i("Dns Use Time : ${it.hostAddress}")
@@ -47,7 +36,14 @@ class MyOKhttpEventListner : EventListener() {
             Timber.i("Dns Use Time : ${it.canonicalHostName}")
         }
 
-        schemeDao.insert(schemeItem)
+        schemeDao.insert(SchemeItem(0,"code:", 0, 200).apply {
+            schemeUrl = "call ${call.request().url().host()}"
+            callTime = -TimeUnit.NANOSECONDS.toMillis(eventTime!!.callStartTime - eventTime!!.callEndTime)
+            dnsTime = -TimeUnit.NANOSECONDS.toMillis(eventTime!!.dnsStartTime - eventTime!!.dnsEndTime)
+            connectionTime = -TimeUnit.NANOSECONDS.toMillis(eventTime!!.connectionStartTime - eventTime!!.connectionEndTime)
+            connectTime = -TimeUnit.NANOSECONDS.toMillis(eventTime!!.connectStartTime - eventTime!!.connectEndTime)
+            useTime = callTime
+        })
         eventTime = null
 
     }

@@ -75,7 +75,7 @@
             app:layout_constraintRight_toLeftOf="@id/add_btn_b612"
             android:text="download"
             android:onClick="@{v -> vm.startDownload()}"
-            android:visibility="gone"
+            android:visibility="visible"
             />
 
         <Button
@@ -88,7 +88,7 @@
             android:visibility="gone"
             />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.bird.mm.ui.scheme.DownRecycleView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:id="@+id/repo_list"
@@ -102,6 +102,20 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
+            />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:switchMinWidth="20dp"
+            android:track="@drawable/meet_swtich_selector"
+            android:thumb="@drawable/meet_thumb"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="20dp"
+            android:checked="false"
+            android:visibility="gone"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
